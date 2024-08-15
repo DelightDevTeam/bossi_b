@@ -98,6 +98,10 @@
     font-weight: 600;
     font-size: 18px;
   }
+  .providerImg{
+    max-height: 65px;
+    width: 90px;
+  }
 @media screen and (max-width:1030px) {
     .beforeLoginHome{
         width: 40%;
