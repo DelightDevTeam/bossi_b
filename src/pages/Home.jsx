@@ -53,7 +53,8 @@ const HomePage = () => {
   };
 
   return (
-    <div className="px-lg-3">
+    <div >
+      <div className="px-lg-3" >
       <div className="d-flex align-items-center  gap-sm-3">
         <Marquee/>
         <LanguageDropdown/>
@@ -99,6 +100,7 @@ const HomePage = () => {
             );
           })}
         </div>
+      </div>
       </div>
       {/* Desktop Games Tabs */}
       <GameTabsLg/>
