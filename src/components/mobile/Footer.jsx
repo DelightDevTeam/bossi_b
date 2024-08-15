@@ -30,8 +30,8 @@ const FooterProviders = () => {
 
     return (
     <div style={{background:'#0D0D0D'}} className='py-5' >
-       <small className='d-block text-center'>Best viewed by Google Chrome 72.0 or higher. Best viewed at a resolution of 1280x1024 or higher</small>
-       <small className="d-block text-center my-4">m9 Asia Copyright © 2019 . All rights reserved.</small>
+       <p className='d-block text-center'>Best viewed by Google Chrome 72.0 or higher. Best viewed at a resolution of 1280x1024 or higher</p>
+       <p className="d-block text-center my-4">m9 Asia Copyright © 2019 . All rights reserved.</p>
       <div className='mt-3 d-flex flex-wrap align-items-center justify-content-center gap-3 px-0 px-sm-4  mb-5 mb-sm-0'>
          {providers.map((img,index)=>{
             return <img src={img} className='providerImg ' key={index} />
