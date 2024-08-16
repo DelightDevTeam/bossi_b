@@ -501,7 +501,8 @@ const GameTabsLg = () => {
           );
         })}
       </div>
-      <div className="d-flex mt-4 align-items-center justify-content-center gap-1">
+      <div className="providerTabsContainer  d-flex mt-4 align-items-center   gap-1">
+        
         {gameType === "slot" &&
           slot_providers && slot_providers.map((list, index) => {
             return (
