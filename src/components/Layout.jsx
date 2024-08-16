@@ -9,30 +9,39 @@ import popUp from "../assets/img/popupImg.png";
 import useFetch from "../hooks/useFetch";
 import BASE_URL from "../hooks/baseURL";
 import SidebarLg from "./desktop/SidebarLg";
-import Marquee from './mobile/Marquee'
-import Carousel from './mobile/Carousel'
+import Marquee from "./mobile/Marquee";
+import Carousel from "./mobile/Carousel";
+import { AuthContextProvider } from "../contexts/AuthContext";
 
 const Layout = () => {
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div>
-      <Navbar />
-      {/* Mobile */}
-      <div className="mobileScreenContainer">
-        <Outlet />
-      </div>
-      <div className="lgScreenContainer"> 
-      <div className="row " style={{minHeight:'100vh',overflowY:'scroll',height:'max-content'}}>
-        <div className="col-3 sidebarLg app-gradient">
-          <SidebarLg/>
+      <AuthContextProvider>
+        <Navbar />
+        {/* Mobile */}
+        <div className="mobileScreenContainer">
+          <Outlet />
         </div>
-        <div className="col-9 px-0">
-          <Outlet/>
+        <div className="lgScreenContainer">
+          <div
+            className="row "
+            style={{
+              minHeight: "100vh",
+              overflowY: "scroll",
+              height: "max-content",
+            }}
+          >
+            <div className="col-3 sidebarLg app-gradient">
+              <SidebarLg />
+            </div>
+            <div className="col-9 px-0">
+              <Outlet />
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
-      <BottomMenu />
+        <BottomMenu />
+      </AuthContextProvider>
     </div>
   );
 };

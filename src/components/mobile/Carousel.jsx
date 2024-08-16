@@ -1,16 +1,16 @@
 import React from 'react'
 import { Carousel } from 'react-bootstrap'
-import b1 from '../../assets/img/b1.png'
-import b2 from '../../assets/img/b2.png'
-import b3 from '../../assets/img/b3.png'
+import useFetch from '../../hooks/useFetch'
+import BASE_URL from '../../hooks/baseURL'
 
 const Carousels = () => {
-  const imgs=[b1,b2,b3]
+  const {data: banners} = useFetch(BASE_URL + "/banner");
+  
   return (
     <Carousel>
-      {imgs.map((img,index)=>{
+      {banners && banners.map((banner,index)=>{
         return  <Carousel.Item key={index}>
-          <img src={img} className='bannerImg' />
+          <img src={banner.img_url} className='bannerImg' />
         </Carousel.Item>
       })}
    

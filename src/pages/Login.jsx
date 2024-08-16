@@ -1,52 +1,131 @@
-import React from 'react'
-import { Form, InputGroup } from 'react-bootstrap'
-import { BiLock, BiPhone, BiUser } from 'react-icons/bi'
-import { FaIdCard } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import '../assets/css/auth.css'
+import React, { useContext, useEffect, useState } from "react";
+import { Form, InputGroup, Spinner } from "react-bootstrap";
+import { BiLock, BiPhone, BiUser } from "react-icons/bi";
+import { FaIdCard } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import "../assets/css/auth.css";
+import BASE_URL from "../hooks/baseURL";
+
 const LoginPage = () => {
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const auth = localStorage.getItem("token");
+
+  useEffect(() => {
+    if(auth){
+      navigate("/");
+    }
+  }, [navigate, auth])
+
+  const login = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const loginData = {
+      user_name: name,
+      password: password,
+    };
+    fetch(BASE_URL + "/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          setLoading(false);
+          let errorData;
+          try {
+            errorData = await response.json();
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+          }
+
+          if (response.status === 422) {
+            setErrMsg("");
+            setError(errorData.errors);
+          } else if (response.status === 401) {
+            setError("");
+            setErrMsg(errorData.message);
+          } else {
+          }
+          throw new Error("Login Failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        if (data.data.token) {
+          localStorage.setItem("token", data.data.token);
+          localStorage.setItem("ads", "on");
+          navigate("/");
+          console.log("success");
+        } else {
+          throw new Error("Token not found in response");
+        }
+      })
+      .catch((error) => {});
+  };
   return (
-       <div className='authBg py-4 mb-5'>
+    <div className="authBg py-4 mb-5">
       <h3 className="fw-bold text-center mb-4">လော့အင်</h3>
-      
-      <form action="" className="authForm mx-auto my-4">
-      <InputGroup className='mb-3'>
-      <InputGroup.Text className='formIcon' id="basic-addon1">
-        <BiUser size={20} />
-      </InputGroup.Text>
-        <Form.Control
-          placeholder="ဂိမ်းအကောင့်"
-           aria-describedby="basic-addon1"
-        />
-      </InputGroup>
-       <InputGroup className='mb-3'>
-      <InputGroup.Text className='formIcon' id="basic-addon1">
-        <BiLock size={20} />
-      </InputGroup.Text>
-        <Form.Control
-          placeholder="စကားဝှက်"
-        type='password'
-        />
-      </InputGroup>
-      
-     
-      <div className="authBtns ">
-      <div className="loginBtn mb-3">
-          <div className="text-center pt-3">
-            <h5 className="fw-semibold">လော့အင်</h5>
-          </div>
+      <form onSubmit={login} className="authForm mx-auto my-4">
+        <div className="mb-3">
+          <InputGroup>
+            <InputGroup.Text className="formIcon" id="basic-addon1">
+              <BiUser size={20} />
+            </InputGroup.Text>
+            <Form.Control
+              placeholder="ဂိမ်းအကောင့်"
+              aria-describedby="basic-addon1"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
+          </InputGroup>
+          {error.user_name && (
+            <span className="text-danger">*{error.user_name}</span>
+          )}
         </div>
-         <Link to={'/register'}>
-        <div className="registerBtn mb-3 ">
-          <div className="text-center pt-3 ">
-            <h5 className="fw-semibold">စာရင်းသွင်းရန်</h5>
-          </div>
+        <div className="mb-3">
+          <InputGroup>
+            <InputGroup.Text className="formIcon" id="basic-addon1">
+              <BiLock size={20} />
+            </InputGroup.Text>
+            <Form.Control
+              placeholder="စကားဝှက်"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+          </InputGroup>
+          {error.password && (
+            <span className="text-danger">*{error.password}</span>
+          )}
         </div>
-        </Link>
-     </div>
+
+        <div className="authBtns">
+          <button className="loginBtn mb-3" type="submit">
+            <div className="text-center py-3">
+              {loading && <Spinner size="sm" animation="border" />}
+              <h5 className="fw-semibold d-inline ms-2">လော့အင်</h5>
+            </div>
+          </button>
+          <Link to={"/register"}>
+            <div className="registerBtn mb-3 ">
+              <div className="text-center pt-3 ">
+                <h5 className="fw-semibold">စာရင်းသွင်းရန်</h5>
+              </div>
+            </div>
+          </Link>
+        </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
