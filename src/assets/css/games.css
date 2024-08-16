@@ -1,3 +1,9 @@
+.providerTabsContainer{
+    overflow-x: scroll;
+  }
+.providerTabsContainer::-webkit-scrollbar{
+    display: none;
+}
 .gameCardLg{
     position: relative ;
     
