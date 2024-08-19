@@ -12,6 +12,8 @@ import BASE_URL from "../../hooks/baseURL";
 import HotGames from "../HotGames";
 import Games from "../Games";
 import Providers from "../Providers";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const GameTabsLg = () => {
   const { lan } = useContext(AuthContext);
@@ -453,16 +455,16 @@ const GameTabsLg = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [games, setGames] = useState([]);
-  let gameList = searchParams.get("list") || "JILI";
-  let gameType = searchParams.get("type") || "all";
+  let gameList = searchParams.get("list") || "PP";
+  let gameType = searchParams.get("type") || "slot";
   const selectedGameLists = listsData.filter(
     (data) => data.gameType == gameType
   )[0];
   // console.log(selectedGameLists);
 
   useEffect(() => {
-    if (gameList === "JILI" && gameType === "all")
-      navigate("?type=all&list=JILI");
+    if (gameList === "PP" && gameType === "slot")
+      navigate("?type=slot&list=PP");
     if (gameType === "sport book") {
       setGames({
         games: [
@@ -488,7 +490,7 @@ const GameTabsLg = () => {
           return (
             <div
               onClick={() => {
-                navigate(`?type=${item.value}&list=JILI`);
+                navigate(`?type=${item.value}&list=PP`);
               }}
               key={index}
               className="cursor-pointer col-2 px-1"
@@ -501,32 +503,27 @@ const GameTabsLg = () => {
           );
         })}
       </div>
-      <div className="providerTabsContainer  d-flex mt-4 align-items-center   gap-1">
-        
-        {gameType === "slot" &&
-          slot_providers && slot_providers.map((list, index) => {
-            return (
-              <div
-                onClick={() => {
-                  navigate(`?type=${gameType}&list=${list.short_name}`);
-                }}
-                className={`${
-                  searchParams.get("list") === list.name ? "activeGameList" : ""
+      
+      {gameType === "slot" &&  slot_providers &&  <Swiper className="mySwiper mt-3"   slidesPerView={10}
+         >
+          {slot_providers.map((list, index) =>{
+            return <SwiperSlide   onClick={() => {
+              navigate(`?type=${gameType}&list=${list.short_name}`);
+            }} key={index}>
+              <div 
+            className={`${
+              searchParams.get("list") === list.short_name ? "activeGameList" : "" }
+               ${index === 0 && "gameListStart"}
+                ${
+                  index === slot_providers.length - 1 &&
+                  "gameListEnd"
                 }
-                    ${index === 0 && "gameListStart"}
-                     ${
-                       index === selectedGameLists.lists.length - 1 &&
-                       "gameListEnd"
-                     }
-                 cursor-pointer fw-semibold py-1 px-3 px-sm-4  gameProvider `}
-                key={index}
-              >
-                {" "}
-                {list.short_name}
-              </div>
-            );
+            cursor-pointer text-center fw-semibold py-1 px-3 px-sm-4  gameProvider text-nowrap`}
+          
+         >{list.short_name} </div> </SwiperSlide>
           })}
-      </div>
+         </Swiper> }
+       
       <div className="row mt-4">
         {gameType === "all" &&
           allProviders && allProviders.map((item, index) => {
