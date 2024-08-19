@@ -22,7 +22,7 @@ const SidebarLg = () => {
   const { lan, auth, user } = useContext(AuthContext);
   const [loader, setLoader] = useState(false);
   const navLinks = [
-    { img: home, name_mm: "ပင်မ",name: "Home", link: "/?type=all&list=JILI" },
+    { img: home, name_mm: "ပင်မ",name: "Home", link: "/?type=slot&list=PP" },
     { img: profile, name_mm: "မိမိမှတ်တမ်း",name: "My Records", link: "/information?tab=profile" },
     { img: money, name_mm: "ငွေသွင်း/ငွေထုတ်",name: "Cash In/Out", link: "/information?tab=transfer" },
     { img: promotion, name_mm: "ပရိုမိုးရှင်း",name: "Promotions", link: "/promotion" },
