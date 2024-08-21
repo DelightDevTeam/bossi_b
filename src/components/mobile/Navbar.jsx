@@ -25,7 +25,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { lan, auth, user } = useContext(AuthContext);
+  const { lan, auth, user} = useContext(AuthContext);
   const [loader, setLoader] = useState(false);
 
   const navLinks = [

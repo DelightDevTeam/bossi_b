@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import BASE_URL from '../../hooks/baseURL';
 import SmallSpinner from './SmallSpinner';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Profile = () => {
-  const {data:user} = useFetch(BASE_URL + "/user");
-
-  const [username, setUsername] = useState("");
+  // const {data:user} = useFetch(BASE_URL + "/user");
+  const {updateProfile, user, auth} = useContext(AuthContext);
+  const [username, setUsername] = useState(user?.user_name);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  
-  const auth = localStorage.getItem('token');
   const navigate = useNavigate();
 
-  
 
-  
 
   const profile = (e) => {
     e.preventDefault();
@@ -65,15 +62,26 @@ const Profile = () => {
         return response.json();
       })
       .then((data) => {
+        window.location.reload();
+        
         setLoading(false);
         setSuccess("New Password Changed Successfully.");
         setErrMsg("")
         setError("")
+        updateProfile(data.data);
       })
       .catch((error) => {
         // console.error(error);
       });
   }
+  useEffect(() => {
+    if(user){
+      setUsername(user?.user_name);
+      setName(user?.name || "");
+      setPhone(user?.phone || "");
+    }
+    
+  }, [user])
   
   return (
     <div>
@@ -97,7 +105,7 @@ const Profile = () => {
             <div className="profileTitle col-5 mt-2">ဂိမ်းအကောင့် : </div>
             <div className="col-7">
               <input type="text" 
-              className="form-control"
+              className="form-control text-dark"
               value={username} 
               disabled
               />

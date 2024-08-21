@@ -7,7 +7,7 @@ import p3 from '../assets/img/p3.png'
 
 const Promotion = () => {
   const {data: promotions} = useFetch(BASE_URL + '/promotion')
-   console.log(promotions);
+  //  console.log(promotions);
    
   const imgs=[
         p1,p2,p3

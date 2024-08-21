@@ -8,6 +8,7 @@ import Profile from "../components/mobile/Profile";
 import MoneyTransfer from "../components/mobile/MoneyTransfer";
 import ChangePassword from "../components/mobile/ChangePassword";
 import Log from "../components/mobile/Log";
+import { AuthContextProvider } from "../contexts/AuthContext";
  
 
 const InformationPage = () => {
@@ -41,6 +42,7 @@ const InformationPage = () => {
     if (!tab) navigate("/information?tab=profile");
   }, []);
   return (
+    <AuthContextProvider>
     <div className="mb-5 pb-5" style={{ overflowX: "hidden" }}>
       <div style={{ background: "#560A61" }} className="row">
         {heading.map((item) => {
@@ -67,7 +69,7 @@ const InformationPage = () => {
         {tab === "profile" && (
           <>
             <Profile />
-            <BankAccount/>
+            {/* <BankAccount/> */}
             <ChangePassword />
           </>
         )}
@@ -75,6 +77,7 @@ const InformationPage = () => {
         {tab === "logs" && <Log />}
       </div>
     </div>
+    </AuthContextProvider>
   );
 };
 

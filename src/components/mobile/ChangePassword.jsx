@@ -61,6 +61,9 @@ const ChangePassword = () => {
         setSuccess("New Password Changed Successfully.");
         setErrMsg("")
         setError("")
+        setCurrent("");
+        setPassword("");
+        setConfirm("");
       })
       .catch((error) => {
         console.error(error);
