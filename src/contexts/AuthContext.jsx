@@ -12,39 +12,31 @@ const AuthContext = createContext({
 
 const AuthContextProvider = ({ children }) => {
   const token = localStorage.getItem("token");
-  const { data: userData, error } = useFetch(BASE_URL + "/user");
+  const [url, setUrl] = useState("")
+  const { data: userData, error } = useFetch(url ?? "");
   const [profile, setProfile] = useState(null);
   const [language, setLanguage] = useState("en");
-  const navigate = useNavigate();
-
-//   useEffect(() => {
-//     if (!token) {
-//       navigate('/login');
-//     }
-//   }, [token, navigate]);
 
   useEffect(() => {
-    if (userData) {
+    if (token && userData) {
+      setUrl(BASE_URL + "/user")
       setProfile(userData);
     }
-  }, [userData]);
-
-//   useEffect(() => {
-//     if (error) {
-//       console.error("Failed to fetch user data:", error);
-//     }
-//   }, [error]);
+  }, [token, userData]);
 
   const updateProfile = (newProfile) => setProfile(newProfile);
   const updateLanguage = (newLanguage) => setLanguage(newLanguage);
 
-  const value = useMemo(() => ({
-    auth: token,
-    user: profile,
-    lan: language,
-    updateProfile,
-    updateLanguage,
-  }), [token, profile, language]);
+  const value = useMemo(
+    () => ({
+      auth: token,
+      user: profile,
+      lan: language,
+      updateProfile,
+      updateLanguage,
+    }),
+    [token, profile, language]
+  );
 
   return (
     <AuthContext.Provider value={value}>

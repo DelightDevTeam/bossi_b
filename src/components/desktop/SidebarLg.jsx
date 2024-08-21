@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/img/logo.png";
 import { FaViber } from "react-icons/fa";
 import profile from "../../assets/img/profile.svg";
@@ -20,6 +20,7 @@ import BASE_URL from "../../hooks/baseURL";
 
 const SidebarLg = () => {
   const { lan, auth, user } = useContext(AuthContext);
+  
   const [loader, setLoader] = useState(false);
   const navLinks = [
     { img: home, name_mm: "ပင်မ",name: "Home", link: "/?type=slot&list=PP" },
@@ -101,13 +102,13 @@ const SidebarLg = () => {
                 style={{ marginBottom: "0px" }}
               >
                 <img src={profile} className="me-1 navProfileImg" />
-                <h5 className="navBalance fw-bold">{user && user.name}</h5>
+                <h5 className="navBalance fw-bold">{user?.name && user.name}</h5>
               </div>
               <div
                 style={{ background: "#3C0646" }}
                 className="ms-1 d-flex py-1  text-white px-2 px-sm-3 rounded-4 mb-3"
               >
-                <p className="navBalance">{user && Number(user.balance).toLocaleString()} MMK</p>
+                <p className="navBalance">{user?.balance && Number(user.balance).toLocaleString()} MMK</p>
                 <span className="repeatIcon bg-danger ms-1">
                   <BsArrowRepeat size={16} />
                 </span>
