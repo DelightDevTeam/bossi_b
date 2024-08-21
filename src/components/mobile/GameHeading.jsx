@@ -22,7 +22,7 @@ const GameHeading = () => {
       <div
         onClick={() => {
           setSelectedTab("all")
-          navigate('/games?tab=all&type=all&list=JILI')
+          navigate('/games?tab=all&type=all')
         }}
         className={`${
           selectedTab === "all" || searchParams.get('type')==='all'  ? "activeGameHeading" : ""
@@ -37,7 +37,7 @@ const GameHeading = () => {
       <div
         onClick={() =>{ 
           setSelectedTab("hot")
-          navigate('/games?tab=hot&type=hot&list=JILI')
+          navigate('/games?tab=hot&type=hot')
         }
         }
         className={`${

@@ -1,371 +1,90 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import GameHeading from "../components/mobile/GameHeading";
+import GameProviders from "../components/mobile/GameProviders";
+import useFetch from "../hooks/useFetch";
+import BASE_URL from "../hooks/baseURL";
+import { Spinner } from "react-bootstrap";
 import GameLists from "../components/mobile/GameLists";
+import AllProviders from "../components/mobile/AllProviders";
 
 const GamesPage = () => {
-  const [searchParams] = useSearchParams();
-  const [games, setGames] = useState([]);
-  const gameType = searchParams.get("type");
+  const { data: slotGames, loading } = useFetch(
+    BASE_URL + "/gameTypeProducts/1"
+  );
+  const { data: casinoGames } = useFetch(BASE_URL + "/gameTypeProducts/2");
+  const { data: sportGames } = useFetch(BASE_URL + "/gameTypeProducts/3");
+  const { data: fishGames } = useFetch(BASE_URL + "/gameTypeProducts/4");
+
+  const slot_providers = slotGames?.game_type?.products;
+  const casino_providers = casinoGames?.game_type?.products;
+  const sport_providers = sportGames?.game_lobby?.products;
+  const fish_providers = fishGames?.game_type?.products;
+
+  const { data: hotGames } = useFetch(BASE_URL + "/hotgamelist");
+
+  const allProviders = [];
+  slot_providers?.map((item) => allProviders.push(item));
+  casino_providers?.map((item) => allProviders.push(item));
+  sport_providers?.map((item) => allProviders.push(item));
+  fish_providers?.map((item) => allProviders.push(item));
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const gameType = searchParams.get("type" || "all");
   const gameList = searchParams.get("list");
 
-  const gamesData = [
-    {
-      type: "all",
-      lists: [
-        {
-          name: "JILI",
-          games: [
-            "https://nctmedia.online/gamelist/jili_gamelist/263_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/420_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/299_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/399_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/289_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/212_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/153_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/119_en.webp",
-          ],
-        },
-        {
-          name: "PP",
-          games: [
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-464_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-465_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-466_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-467_en.webp",
-          ],
-        },
-        {
-          name: "PG",
-          games: [
-            "https://nctmedia.online/gamelist/pg_gamelist/1623475_anubis-wrath_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1717688_mystic-potion_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1492288_pinata-wins_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1508783_wild-ape_en.webp",
-          ],
-        },
-        {
-          name: "CQ9",
-          games: [
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB16_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/243_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/242_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB15_en.webp",
-          ],
-        },
-        {
-          name: "JDB",
-          games: [
-            "https://nctmedia.online/gamelist/jdb_gamelist/14088_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14090_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14091_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14089_en.webp",
-          ],
-        },
-        {
-          name: "JOKER",
-          games: [
-            "https://nctmedia.online/gamelist/joker_gamelist/cz3wgrounyetc.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/xq9ohbyf9m79o.webp",
-          ],
-        },
-      ],
-    },
-    {
-      type: "hot",
-      lists: [
-        {
-          name: "JILI",
-          games: [
-            "https://nctmedia.online/gamelist/jili_gamelist/263_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/420_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/299_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/399_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/289_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/212_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/153_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/119_en.webp",
-          ],
-        },
-        {
-          name: "PP",
-          games: [
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-464_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-465_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-466_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-467_en.webp",
-          ],
-        },
-        {
-          name: "PG",
-          games: [
-            "https://nctmedia.online/gamelist/pg_gamelist/1623475_anubis-wrath_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1717688_mystic-potion_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1492288_pinata-wins_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1508783_wild-ape_en.webp",
-          ],
-        },
-        {
-          name: "CQ9",
-          games: [
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB16_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/243_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/242_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB15_en.webp",
-          ],
-        },
-        {
-          name: "JDB",
-          games: [
-            "https://nctmedia.online/gamelist/jdb_gamelist/14088_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14090_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14091_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14089_en.webp",
-          ],
-        },
-        {
-          name: "JOKER",
-          games: [
-            "https://nctmedia.online/gamelist/joker_gamelist/cz3wgrounyetc.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/xq9ohbyf9m79o.webp",
-          ],
-        },
-      ],
-    },
-    {
-      type: "slot",
-      lists: [
-        {
-          name: "JILI",
-          games: [
-            "https://nctmedia.online/gamelist/jili_gamelist/263_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/420_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/299_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/399_en.webp",
-          ],
-        },
-        {
-          name: "PP",
-          games: [
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-464_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-465_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-466_en.webp",
-            "https://nctmedia.online/gamelist/pp_gamelist/PP-SLOT-467_en.webp",
-          ],
-        },
-        {
-          name: "PG",
-          games: [
-            "https://nctmedia.online/gamelist/pg_gamelist/1623475_anubis-wrath_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1717688_mystic-potion_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1492288_pinata-wins_en.webp",
-            "https://nctmedia.online/gamelist/pg_gamelist/1508783_wild-ape_en.webp",
-          ],
-        },
-        {
-          name: "CQ9",
-          games: [
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB16_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/243_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/242_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/GB15_en.webp",
-          ],
-        },
-        {
-          name: "JDB",
-          games: [
-            "https://nctmedia.online/gamelist/jdb_gamelist/14088_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14090_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14091_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/14089_en.webp",
-          ],
-        },
-        {
-          name: "JOKER",
-          games: [
-            "https://nctmedia.online/gamelist/joker_gamelist/zcw3utgfzk75o.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/htacf8c11qejn.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/bqc117dipjiso.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/g58bao4yefdrq.webp",
-          ],
-        },
-        {
-          name: "PS",
-          games: [
-            "https://nctmedia.online/gamelist/ps_gamelist/PSS-ON-00156_en.webp",
-            "https://nctmedia.online/gamelist/ps_gamelist/PSS-ON-00155_en.webp",
-            "https://nctmedia.online/gamelist/ps_gamelist/PSS-ON-00151_en.webp",
-            "https://nctmedia.online/gamelist/ps_gamelist/PSS-ON-00154_en.webp",
-          ],
-        },
-        {
-          name: "KA",
-          games: [
-            "https://nctmedia.online/gamelist/ka_gamelist/FatGuy_en.webp",
-            "https://nctmedia.online/gamelist/ka_gamelist/StoryOfFarmer_en.webp",
-            "https://nctmedia.online/gamelist/ka_gamelist/ChihuahuaParty_en.webp",
-            "https://nctmedia.online/gamelist/ka_gamelist/HailTheJudge_en.webp",
-          ],
-        },
-      ],
-    },
-    {
-      type: "fishing",
-      lists: [
-        {
-          name: "JILI",
-          games: [
-            "https://nctmedia.online/gamelist/jili_gamelist/289_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/212_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/153_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/119_en.webp",
-          ],
-        },
-        {
-          name: "PS",
-          games: [
-            "https://nctmedia.online/gamelist/ps_gamelist/PSF-ON-00002_en.webp",
-            "https://nctmedia.online/gamelist/ps_gamelist/PSF-ON-00006_en.webp",
-            "https://nctmedia.online/gamelist/ps_gamelist/PSF-ON-00001_en.webp",
-          ],
-        },
-        {
-          name: "JOKER",
-          games: [
-            "https://nctmedia.online/gamelist/joker_gamelist/cz3wgrounyetc.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/xq9ohbyf9m79o.webp",
-          ],
-        },
-        {
-          name: "JDB",
-          games: [
-            "https://nctmedia.online/gamelist/jdb_gamelist/7008_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/7009_en.webp",
-            "https://nctmedia.online/gamelist/jdb_gamelist/7007_en.webp",
-          ],
-        },
-        {
-          name: "CQ9",
-          games: [
-            "https://nctmedia.online/gamelist/cq9_gamelist/GO02_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/AT05_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/AT01_en.webp",
-          ],
-        },
-        {
-          name: "KA",
-          games: [
-            "https://nctmedia.online/gamelist/ka_gamelist/LeprechaunAndAnimals_en.webp",
-            "https://nctmedia.online/gamelist/ka_gamelist/MonsterDestroyer_en.webp",
-          ],
-        },
-        {
-          name: "YB",
-          games: [
-            "https://nctmedia.online/gamelist/yb_gamelist/4003_en.webp",
-            "https://nctmedia.online/gamelist/yb_gamelist/2001_en.webp",
-          ],
-        },
-      ],
-    },
-    {
-      type: "live casino",
-      lists: [
-        {
-          name: "JILI",
-          games: [
-            "https://nctmedia.online/gamelist/jili_gamelist/407_en.webp",
-            "https://nctmedia.online/gamelist/jili_gamelist/262_en.webp",
-          ],
-        },
-        {
-          name: "SA",
-          games: [
-            "https://nctmedia.online/gamelist/sa_baccarat/840.webp",
-            "https://nctmedia.online/gamelist/sa_baccarat/866.webp",
-          ],
-        },
-        {
-          name: "JOKER",
-          games: [
-            "https://nctmedia.online/gamelist/joker_gamelist/856dgq3a8r9d6.webp",
-            "https://nctmedia.online/gamelist/joker_gamelist/j3wngk3efrzn6.webp",
-          ],
-        },
-        {
-          name: "SEXY",
-          games: [
-            "https://nctmedia.online/gamelist/sexy_baccarat/MX-LIVE-013.webp",
-            "https://nctmedia.online/gamelist/sexy_baccarat/MX-LIVE-017.webp",
-          ],
-        },
-        {
-          name: "AG",
-          games: [
-            "https://nctmedia.online/gamelist/ag_gamelist/0.webp",
-            "https://nctmedia.online/gamelist/ag_gamelist/27.webp",
-          ],
-        },
-        {
-          name: "CQ9",
-          games: [
-            "https://nctmedia.online/gamelist/cq9_gamelist/GO03_en.webp",
-            "https://nctmedia.online/gamelist/cq9_gamelist/BT03_en.webp",
-          ],
-        },
-      ],
-    },
-    {
-      type: "sport book",
-      lists: [
-        {
-          games: [
-            "https://shwedinker777.online/assets/img/game_logo/sbo_sport.jpeg",
-            "https://shwedinker777.online/assets/img/game_logo/ug_sport.jpeg",
-            "https://shwedinker777.online/assets/img/game_logo/ibc.jpeg",
-            "https://shwedinker777.online/assets/img/game_logo/ssport.jpeg",
-          ],
-        },
-      ],
-    },
-  ];
-  useEffect(() => {
-    if (gameType === "sport book") {
-      setGames({
-        games: [
-          "https://maxwinapi.online/assets/img/game_logo/sbo_sport.jpeg",
-          "https://maxwinapi.online/assets/img/game_logo/ssport.jpeg",
-        ],
-      });
-    } else {
-      const selectedGameType = gamesData.filter(
-        (games) => games.type === gameType
-      )[0];
-      console.log("selectedGameType", selectedGameType);
-      const selectedGameList = selectedGameType.lists.filter(
-        (list) => list.name === gameList
-      )[0];
-      setGames(selectedGameList);
-    }
-  }, [gameType, gameList]);
+  let type =
+    gameType == "fishing"
+      ? 8
+      : gameType == "live casino"
+      ? 2
+      : gameType == "sport book"
+      ? 3
+      : gameType == "slot"
+      ? 1
+      : "";
+  let provider = allProviders.filter((item) => item.short_name == gameList)[0]
+    ?.id;
+
+  const { data: gameLists, loading: gameLoading } = useFetch(
+    BASE_URL + "/game/gamelist/" + provider + "/" + type
+  );
 
   return (
     <div style={{ overflowX: "hidden" }}>
       <GameHeading />
-      <GameLists />
+      <GameProviders gameType={gameType} 
+      gameList={gameList} 
+      slot_providers = {slot_providers} 
+      casino_providers = {casino_providers}
+      fish_providers = {fish_providers}
+      />
+
+
+
       <div className="py-4 px-2 px-sm-4">
         <h4 className="fw-bold text-white ms-2">
           {searchParams.get("type").toUpperCase()} {searchParams.get("list")}
         </h4>
+        {gameType == "all" && (
+          <AllProviders allProviders={allProviders} />
+        )}
+        {gameType == "sport book" && (
+          <AllProviders allProviders={sport_providers} />
+        )}
+        {gameType == "hot" && (
+          <div className="ms-2 row mt-3 mb-5 mx-auto">
+            {hotGames?.map((item, index) => {
+              return (
+                <GameLists key={index} item={item} />
+              );
+            })}
+          </div>
+        )}
         <div className="ms-2 row mt-3 mb-5 mx-auto">
-          {games?.games?.map((item, index) => {
+          {gameLoading ? <Spinner /> : gameLists && gameLists?.map((item, index) => {
             return (
-              <div
-                key={index}
-                className="p-0 cursor-pointer col-4 col-sm-3 col-lg-2 mb-2 mb-sm-3"
-              >
-                <img src={item} className="gameImg  rounded-3 " />
-              </div>
+              <GameLists key={index} item={item} />
             );
           })}
         </div>

@@ -23,7 +23,7 @@ const SidebarLg = () => {
   
   const [loader, setLoader] = useState(false);
   const navLinks = [
-    { img: home, name_mm: "ပင်မ",name: "Home", link: "/?type=slot&list=PP" },
+    { img: home, name_mm: "ပင်မ",name: "Home", link: "/" },
     { img: profile, name_mm: "မိမိမှတ်တမ်း",name: "My Records", link: "/information?tab=profile" },
     { img: money, name_mm: "ငွေသွင်း/ငွေထုတ်",name: "Cash In/Out", link: "/information?tab=transfer" },
     { img: promotion, name_mm: "ပရိုမိုးရှင်း",name: "Promotions", link: "/promotion" },
@@ -33,28 +33,28 @@ const SidebarLg = () => {
   const items = [
     {
       img: slot,
-      link: "/?type=slot&list=JILI",
+      link: "/?type=slot&&list=PP",
       value: "slot",
       name: "Slots",
       name_mm: "စလော့ဂိမ်းများ",
     },
     {
       img: fish,
-      link: "/?type=fishing&list=JILI",
+      link: "/?type=fishing&&list=PlayStar",
       value: "fishing",
       name: "Fishing",
       name_mm: "ငါးပစ်ဂိမ်းများ",
     },
     {
       img: card,
-      link: "/?type=live casino&list=JILI",
+      link: "/?type=live casino&&list=PP",
       value: "live casino",
       name: "Live Casino",
       name_mm: "ကာစီနိုဂိမ်းများ",
     },
     {
       img: football,
-      link: "/?type=sport book&list=SBO",
+      link: "/?type=sport book",
       value: "sport book",
       name: "Sport Book",
       name_mm: "အားကစားဂိမ်းများ",

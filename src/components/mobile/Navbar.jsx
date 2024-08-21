@@ -25,7 +25,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { lan, auth } = useContext(AuthContext);
+  const { lan, auth, user } = useContext(AuthContext);
   const [loader, setLoader] = useState(false);
 
   const navLinks = [
@@ -106,13 +106,13 @@ function Navbar() {
             <Link to={"/information?tab=profile"}>
               <div className="text-center" style={{ marginBottom: "0px" }}>
                 <img src={profile} className="me-1 navProfileImg" />
-                <small className="navBalance fw-bold">user</small>
+                <small className="navBalance fw-bold">{user?.name}</small>
               </div>
               <div
                 style={{ background: "#3C0646" }}
                 className="ms-1 d-flex py-1 text-white px-2 px-sm-3 rounded-4"
               >
-                <small className="navBalance">10000MMK </small>
+                <small className="navBalance">{Number(user?.balance).toLocaleString()} MMK </small>
                 <span className="repeatIcon bg-danger ms-1">
                   <BsArrowRepeat size={16} />
                 </span>

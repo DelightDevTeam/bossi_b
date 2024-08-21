@@ -11,10 +11,10 @@ const BottomMenu = () => {
   const [searchParams] = useSearchParams();
   const items = [
     { img: home, link: "/", value: null },
-    { img: slot, link: "/games?type=slot&&list=JILI", value: "slot" },
-    { img: fish, link: "/games?type=fishing&&list=JILI", value: "fishing" },
-    { img: card, link: "/games?type=live casino&&list=JILI", value: "live casino" },
-    { img: football, link: "/games?type=sport book&&list=SBO", value: "sport book" },
+    { img: slot, link: "/games?type=slot&&list=PP", value: "slot" },
+    { img: fish, link: "/games?type=fishing&&list=PlayStar", value: "fishing" },
+    { img: card, link: "/games?type=live casino&&list=PP", value: "live casino" },
+    { img: football, link: "/games?type=sport book", value: "sport book" },
   ];
   return (
     <div className="bottomMenu">
