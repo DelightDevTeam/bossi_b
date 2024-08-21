@@ -59,13 +59,16 @@ const GamesPage = () => {
       casino_providers = {casino_providers}
       fish_providers = {fish_providers}
       />
-
-
-
       <div className="py-4 px-2 px-sm-4">
-        <h4 className="fw-bold text-white ms-2">
-          {searchParams.get("type").toUpperCase()} {searchParams.get("list")}
-        </h4>
+        <div className="d-flex justify-content-between">
+          <h4 className="fw-bold text-white ms-2">
+            {searchParams.get("type").toUpperCase()}
+          </h4>
+          <h4>
+          {searchParams.get("list")}
+          </h4>
+        </div>
+
         {gameType == "all" && (
           <AllProviders allProviders={allProviders} />
         )}

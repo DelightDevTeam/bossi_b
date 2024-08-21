@@ -77,7 +77,7 @@ const Deposit = () => {
         </Modal.Header>
         <Modal.Body className='row'>
             {banks.map((bank,index)=>{
-              return <div onClick={()=>{
+              return <div key={index} onClick={()=>{
                 setShow(false)
                 setSelectedBank(bank)
               }} className='d-flex gap-2 bg-white mb-2 p-2 rounded-3 text-black'>
