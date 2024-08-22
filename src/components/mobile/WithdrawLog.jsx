@@ -37,7 +37,7 @@ export default function WithdrawLog() {
           ) : (
             withdraw &&
             withdraw.map((log, index) => (
-              <div className="col-md-3 col-12" key={index}>
+              <div className="col-md-6 col-12" key={index}>
                 <div
                   className="card p-2 rounded-3 shadow bg-transparent border border-1 border-warning mb-3"
                   
