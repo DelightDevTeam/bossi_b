@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import SmallSpinner from "./SmallSpinner"
 import BASE_URL from '../../hooks/baseURL';
+import authCheck from '../../hooks/authCheck';
 
 const ChangePassword = () => {
+  authCheck();
   const [current, setCurrent] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");

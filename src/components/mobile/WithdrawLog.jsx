@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
 import { Spinner, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function WithdrawLog() {
-  // const [selectedDate,setSelectedDate]=useState('today');
+  const auth = localStorage.getItem('token')
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!auth){
+      navigate('/login')
+    }
+  }, [auth, navigate])
   const { data: withdraw, loading } = useFetch(
     BASE_URL + "/transaction/withdraw-log"
   );
   const { data: channels } = useFetch(BASE_URL + "/payment-type");
-
-  // const logs = withdraw && withdraw.data;
-  // let pages = withdraw && withdraw.links;
-  // console.log(logs);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

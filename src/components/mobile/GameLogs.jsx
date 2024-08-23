@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
+import authCheck from "../../hooks/authCheck";
 
 export default function GameLogs() {
+  authCheck();
   const [selectedDate, setSelectedDate] = useState("today");
   const [url, setUrl] = useState(BASE_URL + "/wager-logs?type=" + selectedDate);
   const { data: logs, loading } = useFetch(url);

@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from "../../hooks/useFetch"
 import BASE_URL from "../../hooks/baseURL"
 import SmallSpinner from './SmallSpinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import authCheck from '../../hooks/authCheck';
 
 const WithDraw = () => {
+  authCheck();
   const {data:user} = useFetch(BASE_URL + "/user");
   const {data: channels} = useFetch(BASE_URL + "/payment-type");
-  const navigate = useNavigate();
 
   const [payment, setPayment] = useState("");
   const [accountName, setAccountName] = useState("");

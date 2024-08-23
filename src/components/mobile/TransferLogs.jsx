@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Spinner, Table } from "react-bootstrap";
 import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
+import authCheck from "../../hooks/authCheck";
 
 export default function TransferLogs() {
+  authCheck();
   const [selectedDate, setSelectedDate] = useState("today");
   const [url, setUrl] = useState(
     BASE_URL + "/transactions?type=" + selectedDate

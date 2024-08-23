@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import authCheck from "../../hooks/authCheck";
 
 const Deposit = () => {
-  const { data: agent } = useFetch(BASE_URL + "/agent");
-  console.log(agent);
-  
-  const { data: banks } = useFetch(BASE_URL + "/payment-type");
-  // const { lan } = useContext(AuthContext);
+  authCheck();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [selectedBank, setSelectedBank] = useState(null);
+  const { data: agentData } = useFetch(BASE_URL + "/agent");
+  const agent = agentData?.agent;
+  const banks = agentData?.banks;
 
   const bank = banks?.find(
     (b) => String(b?.id) === String(agent?.payment_type_id)
@@ -21,8 +26,8 @@ const Deposit = () => {
 
   const handleCopyText = (e) => {
     e.preventDefault();
-    if (agent?.account_number) {
-      navigator.clipboard.writeText(agent?.account_number);
+    if (selectedBank.account_number) {
+      navigator.clipboard.writeText(selectedBank.account_number);
       toast.success("Copied", {
         position: "top-right",
         autoClose: 1000,
@@ -32,6 +37,7 @@ const Deposit = () => {
       });
     }
   };
+
   const deposit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -48,7 +54,7 @@ const Deposit = () => {
     }
 
     const inputData = {
-      agent_payment_type_id: String(agent?.payment_type_id),
+      agent_payment_type_id: String(selectedBank?.id),
       amount,
     };
 
@@ -100,36 +106,35 @@ const Deposit = () => {
         <div className="d-flex justify-content-between">
           <h5 className="fw-bold mb-3">ငွေသွင်းရန်</h5>
         </div>
-        {bank && (
+        {selectedBank && (
           <div className="border border-light bg-transparent rounded-4 p-2 px-3 my-3 shadow-lg">
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex">
                 <div>
                   <img
                     className="rounded-3 shadow"
-                    src={bank.image_url}
+                    src={selectedBank.image_url}
                     width={100}
                     alt=""
                   />
                 </div>
                 <div className="ms-2">
-                  <h6 className="fw-bold text-white">{bank.name}</h6>
-                  <h6 className="fw-bold text-white">{agent?.account_name}</h6>
-                  <h6 className="fw-bold text-white">
-                    {agent?.account_number}
-                  </h6>
+                  <h6 className="fw-bold text-white">{selectedBank.account_name}</h6>
+                  <h6 className="fw-bold text-white">{selectedBank.account_number}</h6>
+                  {/* <h6 className="fw-bold text-white">
+                    {selectedBank.account_number}
+                  </h6> */}
                 </div>
               </div>
               <div>
                 <button className="btn btn-warning" onClick={handleCopyText}>
-                  {/* <FaRegCopy size={25} /> */}
                   Copy
                 </button>
               </div>
             </div>
           </div>
         )}
-        {/* <Button className='mx-auto mb-4' onClick={()=>setShow(!show)} variant="outline-warning">Choose Bank Account</Button> */}
+        <Button className='mx-auto mb-4' onClick={()=>setShow(!show)} variant="outline-warning">Choose Bank Account</Button>
         {/* <div className="row mb-2">
           <div className="profileTitle col-5 mt-2">Bank Type : </div>
           <div className="col-7">
@@ -179,7 +184,7 @@ const Deposit = () => {
           <button className="btn text-black navLoginBtn" type="submit">Submit</button>
         </div>
       </form>
-      {/* <Modal
+      <Modal
         show={show}
         onHide={() => setShow(false)}
         className="cursor-pointer infoBankAccModal"
@@ -193,7 +198,7 @@ const Deposit = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row">
-            {banks.map((bank, index) => {
+            {banks && banks.map((bank, index) => {
               return (
                 <div
                   key={index}
@@ -208,8 +213,8 @@ const Deposit = () => {
                     className="bankModalImg img-fluid rounded-2"
                   />
                   <div>
-                    <p>Account : {bank.account}</p>
-                    <p>Account name : {bank.accName}</p>
+                    <p>Account : {bank.account_number}</p>
+                    <p>Account name : {bank.account_name}</p>
                   </div>
                 </div>
               );
@@ -224,7 +229,7 @@ const Deposit = () => {
             </button>
           </Modal.Footer>
         </div>
-      </Modal> */}
+      </Modal>
     </div>
   );
 };

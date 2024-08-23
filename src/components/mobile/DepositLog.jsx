@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
 import { Table } from "react-bootstrap";
+import authCheck from "../../hooks/authCheck";
 
 export default function DepositLog() {
+  authCheck();
   const { data: logs } = useFetch(BASE_URL + "/transaction/deposit-log");
 
   const formatDate = (dateString) => {

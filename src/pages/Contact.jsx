@@ -7,8 +7,10 @@ import line from '../assets/img/line.webp'
 import { Link } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
 import BASE_URL from '../hooks/baseURL'
+import authCheck from '../hooks/authCheck'
 
 const ContactPage = () => {
+  authCheck();
   const {data:agent} = useFetch(BASE_URL + '/agent')
     const socials=[
         {img:tele,title:'Telegram',link:'/'},
