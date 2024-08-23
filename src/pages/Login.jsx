@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
-import { BiLock, BiPhone, BiUser } from "react-icons/bi";
+import { BiLock, BiPhone, BiPhoneCall, BiUser } from "react-icons/bi";
 import { FaIdCard } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/auth.css";
@@ -8,7 +8,7 @@ import BASE_URL from "../hooks/baseURL";
 
 const LoginPage = () => {
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     const loginData = {
-      user_name: name,
+      phone: phone,
       password: password,
     };
     fetch(BASE_URL + "/login", {
@@ -78,17 +78,17 @@ const LoginPage = () => {
         <div className="mb-3">
           <InputGroup>
             <InputGroup.Text className="formIcon" id="basic-addon1">
-              <BiUser size={20} />
+              <BiPhoneCall size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="ဂိမ်းအကောင့်"
+              placeholder="ဖုန်းနံပါတ်"
               aria-describedby="basic-addon1"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              onChange={(e) => setPhone(e.target.value)}
+              value={phone}
             />
           </InputGroup>
-          {error.user_name && (
-            <span className="text-danger">*{error.user_name}</span>
+          {error.phone && (
+            <span className="text-danger">*{error.phone}</span>
           )}
         </div>
         <div className="mb-3">
