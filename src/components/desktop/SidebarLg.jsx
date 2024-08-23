@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/img/logo.png";
-import { FaViber } from "react-icons/fa";
+import { FaPhoneVolume, FaViber } from "react-icons/fa";
 import profile from "../../assets/img/profile.svg";
 import contact from "../../assets/img/contact.svg";
 import about from "../../assets/img/about.svg";
@@ -17,9 +17,13 @@ import depositLg from "../../assets/img/depositLg.png";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Spinner } from "react-bootstrap";
 import BASE_URL from "../../hooks/baseURL";
+import useFetch from "../../hooks/useFetch";
 
 const SidebarLg = () => {
   const { lan, auth, user } = useContext(AuthContext);
+  const {data: agent} = useFetch(BASE_URL + '/agent');
+  console.log(agent);
+  
   
   const [loader, setLoader] = useState(false);
   const navLinks = [
@@ -173,10 +177,10 @@ const SidebarLg = () => {
         );
       })}
       <div className="mt-4 w-max px-4 px-sm-5 py-2 cursor-pointer sidebarSocial text-center rounded-3">
-        <FaViber size={28} />
-        <p className=" fw-semibold">09123456890</p>
+        <FaPhoneVolume size={28} />
+        <p className=" fw-semibold">{agent?.phone}</p>
       </div>
-      <h5 className=" sidebarTeleText text-center fw-semibold mt-4 mb-3">
+      {/* <h5 className=" sidebarTeleText text-center fw-semibold mt-4 mb-3">
         Telegram
         <span className="mx-1 mx-sm-3">|</span>
         0912346590
@@ -185,7 +189,7 @@ const SidebarLg = () => {
         Viber
         <span className="mx-1 mx-sm-3">|</span>
         0912346590
-      </h5>
+      </h5> */}
     </div>
   );
 };

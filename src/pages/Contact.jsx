@@ -5,8 +5,11 @@ import viber from '../assets/img/viber.png'
 import fb from '../assets/img/fb.png'
 import line from '../assets/img/line.webp'
 import { Link } from 'react-router-dom'
+import useFetch from '../hooks/useFetch'
+import BASE_URL from '../hooks/baseURL'
 
 const ContactPage = () => {
+  const {data:agent} = useFetch(BASE_URL + '/agent')
     const socials=[
         {img:tele,title:'Telegram',link:'/'},
         {img:viber,title:'Viber',link:'/'},
@@ -23,15 +26,16 @@ const ContactPage = () => {
             <small className='d-block mt-2 fw-bold'>လူကြီးမင်းများ အတွက် 24နာရီ ၀န်ဆောင်မှုများ ပေးဆောင်နိုင်ရန်</small>
         </div>
       </div>
-      <div className="row mt-sm-5">
-        {socials.map((item,index)=>{
+      <div className="text-center">
+        Hotline Number - {agent?.phone}
+        {/* {socials.map((item,index)=>{
             return <div className='col-6 mb-4 col-sm-3 text-center' key={index}>
                <Link to={item.link}>
                <img src={item.img} className='socialContactImg' />
                 <small className='d-block'>{item.title}</small>
                </Link>
             </div>
-        })}
+        })} */}
       </div>
     </div>
   )

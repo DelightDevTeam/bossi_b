@@ -13,7 +13,7 @@ import contact from "../../assets/img/contact.svg";
 import deposit from "../../assets/img/deposit.svg";
 import about from "../../assets/img/about.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { FaViber } from "react-icons/fa";
+import { FaPhoneVolume, FaViber } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
@@ -26,6 +26,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 function Navbar() {
   const navigate = useNavigate();
   const { lan, auth, user} = useContext(AuthContext);
+  const {data: agent} = useFetch(BASE_URL + '/agent');
   const [loader, setLoader] = useState(false);
 
   const navLinks = [
@@ -168,10 +169,10 @@ function Navbar() {
             )}
 
             <div className="mt-4 w-max px-4 px-sm-5 py-2 cursor-pointer sidebarSocial text-center rounded-3">
-              <FaViber size={28} />
-              <p className=" fw-semibold">09123456890</p>
+              <FaPhoneVolume size={28} />
+              <p className=" fw-semibold">{agent?.phone}</p>
             </div>
-            <h5 className=" sidebarTeleText text-center fw-semibold mt-4 mb-3">
+            {/* <h5 className=" sidebarTeleText text-center fw-semibold mt-4 mb-3">
               Telegram
               <span className="mx-1 mx-sm-3">|</span>
               0912346590
@@ -180,7 +181,7 @@ function Navbar() {
               Viber
               <span className="mx-1 mx-sm-3">|</span>
               0912346590
-            </h5>
+            </h5> */}
           </Offcanvas.Body>
         </div>
       </Offcanvas>
