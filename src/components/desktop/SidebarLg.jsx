@@ -21,17 +21,31 @@ import useFetch from "../../hooks/useFetch";
 
 const SidebarLg = () => {
   const { lan, auth, user } = useContext(AuthContext);
-  const {data: agent} = useFetch(BASE_URL + '/agent');
-  console.log(agent);
-  
-  
+  const { data: agent } = useFetch(BASE_URL + "/agent");
+  // console.log(agent);
+
   const [loader, setLoader] = useState(false);
   const navLinks = [
-    { img: home, name_mm: "ပင်မ",name: "Home", link: "/" },
-    { img: profile, name_mm: "မိမိမှတ်တမ်း",name: "My Records", link: "/information?tab=profile" },
-    { img: money, name_mm: "ငွေသွင်း/ငွေထုတ်",name: "Cash In/Out", link: "/information?tab=transfer" },
-    { img: promotion, name_mm: "ပရိုမိုးရှင်း",name: "Promotions", link: "/promotion" },
-    { img: contact, name_mm: "ဆက်သွယ်ရန်",name: "Contact", link: "/contact" },
+    { img: home, name_mm: "ပင်မ", name: "Home", link: "/" },
+    {
+      img: profile,
+      name_mm: "မိမိမှတ်တမ်း",
+      name: "My Records",
+      link: "/information?tab=profile",
+    },
+    {
+      img: money,
+      name_mm: "ငွေသွင်း/ငွေထုတ်",
+      name: "Cash In/Out",
+      link: "/information?tab=transfer",
+    },
+    {
+      img: promotion,
+      name_mm: "ပရိုမိုးရှင်း",
+      name: "Promotions",
+      link: "/promotion",
+    },
+    { img: contact, name_mm: "ဆက်သွယ်ရန်", name: "Contact", link: "/contact" },
     // { img: about, name_mm: "ကျွန်ုပ်တို့အကြောင်း",name: "About Us", link: "/about" },
   ];
   const items = [
@@ -106,50 +120,59 @@ const SidebarLg = () => {
                 style={{ marginBottom: "0px" }}
               >
                 <img src={profile} className="me-1 navProfileImg" />
-                <h5 className="navBalance fw-bold">{user?.name && user.name}</h5>
+                <h5 className="navBalance fw-bold">
+                  {user?.name && user.name}
+                </h5>
               </div>
               <div
                 style={{ background: "#3C0646" }}
                 className="ms-1 d-flex py-1  text-white px-2 px-sm-3 rounded-4 mb-3"
               >
-                <p className="navBalance">{user?.balance && Number(user.balance).toLocaleString()} MMK</p>
+                <p className="navBalance">
+                  {user?.balance && Number(user.balance).toLocaleString()} MMK
+                </p>
                 <span className="repeatIcon bg-danger ms-1">
                   <BsArrowRepeat size={16} />
                 </span>
               </div>
             </Link>
+            <Link to={"/information?tab=transfer"}>
+              <img src={depositLg} className="depositLgImg" />
+            </Link>
           </div>
         )}
-
-        <Link to={"/information?tab=transfer"}>
-          <img src={depositLg} className="depositLgImg" />
-        </Link>
       </div>
       <div className="text-center px-4 mt-4">
         {auth && (
           <div className="registerBtn mb-3 cursor-pointer" onClick={logout}>
             <div className="text-center pt-3 ">
               {loader && <Spinner size="sm" className="me-2" />}
-              <h5 className="fw-semibold d-inline">{lan === "en" ? "Logout" : "အကောင့်ထွက်ရန်"}</h5>
+              <h5 className="fw-semibold d-inline">
+                {lan === "en" ? "Logout" : "အကောင့်ထွက်ရန်"}
+              </h5>
             </div>
           </div>
         )}
         {!auth && (
           <>
-          <Link to={"/register"}>
-            <div className="registerBtn">
-              <div className="text-center pt-3 ">
-                <h6 className="fw-semibold">{lan === "en" ? "Register" : "စာရင်းသွင်းပါ" }</h6>
+            <Link to={"/register"}>
+              <div className="registerBtn">
+                <div className="text-center pt-3 ">
+                  <h6 className="fw-semibold">
+                    {lan === "en" ? "Register" : "စာရင်းသွင်းပါ"}
+                  </h6>
+                </div>
               </div>
-            </div>
-          </Link>
-          <Link to={"/login"}>
-            <div className="loginBtn mb-3">
-              <div className="text-center pt-3 ">
-                <h6 className="fw-semibold">{lan === "en" ? "Login" : "အကောင့်ဝင်ပါ" }</h6>
+            </Link>
+            <Link to={"/login"}>
+              <div className="loginBtn mb-3">
+                <div className="text-center pt-3 ">
+                  <h6 className="fw-semibold">
+                    {lan === "en" ? "Login" : "အကောင့်ဝင်ပါ"}
+                  </h6>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
           </>
         )}
 
@@ -158,7 +181,9 @@ const SidebarLg = () => {
             <Link to={item.link} key={index}>
               <div className="py-2 mb-3 px-4 rounded-5 border border-2 border-white text-center d-flex align-items-center justify-content-center gap-2">
                 <img src={item.img} className="sidebarLgIcon" />
-                <p className="fw-semibold">{ lan == "en" ? item.name : item.name_mm}</p>
+                <p className="fw-semibold">
+                  {lan == "en" ? item.name : item.name_mm}
+                </p>
               </div>
             </Link>
           );
@@ -172,7 +197,9 @@ const SidebarLg = () => {
             key={index}
           >
             <img src={item.img} className="fixedBottomIcon lgGameTabText" />
-            <p className="fw-semibold lgGameTabText">{lan === "en" ? item.name : item.name_mm}</p>
+            <p className="fw-semibold lgGameTabText">
+              {lan === "en" ? item.name : item.name_mm}
+            </p>
           </Link>
         );
       })}

@@ -25,8 +25,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { lan, auth, user} = useContext(AuthContext);
-  const {data: agent} = useFetch(BASE_URL + '/agent');
+  const { lan, auth, user } = useContext(AuthContext);
+  const { data: agent } = useFetch(BASE_URL + "/agent");
   const [loader, setLoader] = useState(false);
 
   const navLinks = [
@@ -99,28 +99,33 @@ function Navbar() {
             <img src={logo} className="navLogo" />
           </Link>
         </div>
-        <div className="d-flex align-items-center gap-sm-2">
-          <Link to={"/information?tab=transfer"}>
-            <img src={deposit} className="navDepositImg" />
-          </Link>
-          <div>
-            <Link to={"/information?tab=profile"}>
-              <div className="text-center" style={{ marginBottom: "0px" }}>
-                <img src={profile} className="me-1 navProfileImg" />
-                <small className="navBalance fw-bold">{user?.name}</small>
-              </div>
-              <div
-                style={{ background: "#3C0646" }}
-                className="ms-1 d-flex py-1 text-white px-2 px-sm-3 rounded-4"
-              >
-                <small className="navBalance">{Number(user?.balance).toLocaleString()} MMK </small>
-                <span className="repeatIcon bg-danger ms-1">
-                  <BsArrowRepeat size={16} />
-                </span>
-              </div>
+
+        {auth && (
+          <div className="d-flex align-items-center gap-sm-2">
+            <Link to={"/information?tab=transfer"}>
+              <img src={deposit} className="navDepositImg" />
             </Link>
+            <div>
+              <Link to={"/information?tab=profile"}>
+                <div className="text-center" style={{ marginBottom: "0px" }}>
+                  <img src={profile} className="me-1 navProfileImg" />
+                  <small className="navBalance fw-bold">{user?.name}</small>
+                </div>
+                <div
+                  style={{ background: "#3C0646" }}
+                  className="ms-1 d-flex py-1 text-white px-2 px-sm-3 rounded-4"
+                >
+                  <small className="navBalance">
+                    {Number(user?.balance).toLocaleString()} MMK{" "}
+                  </small>
+                  <span className="repeatIcon bg-danger ms-1">
+                    <BsArrowRepeat size={16} />
+                  </span>
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <Offcanvas
         className="sidebar text-white "
@@ -166,6 +171,24 @@ function Navbar() {
                   </h5>
                 </div>
               </div>
+            )}
+            {!auth && (
+              <>
+              <Link to={"/register"}>
+                <div className="registerBtn">
+                  <div className="text-center pt-3 ">
+                    <h6 className="fw-semibold">{lan === "en" ? "Register" : "စာရင်းသွင်းပါ" }</h6>
+                  </div>
+                </div>
+              </Link>
+              <Link to={"/login"}>
+                <div className="loginBtn mb-3">
+                  <div className="text-center pt-3 ">
+                    <h6 className="fw-semibold">{lan === "en" ? "Login" : "အကောင့်ဝင်ပါ" }</h6>
+                  </div>
+                </div>
+              </Link>
+              </>
             )}
 
             <div className="mt-4 w-max px-4 px-sm-5 py-2 cursor-pointer sidebarSocial text-center rounded-3">
