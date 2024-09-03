@@ -111,7 +111,7 @@ const SidebarLg = () => {
           <img src={logo} className="lgSidebarLogo " />
         </Link>
       </div>
-      <div className="d-flex flex-column gap-2 align-items-center">
+      <div className="d-flex flex-column gap-2 align-items-center mt-3">
         {auth && (
           <div>
             <Link to={"/information?tab=profile"}>
