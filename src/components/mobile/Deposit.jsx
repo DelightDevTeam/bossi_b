@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
@@ -7,26 +7,25 @@ import { useNavigate } from "react-router-dom";
 import authCheck from "../../hooks/authCheck";
 
 const Deposit = () => {
-  authCheck();
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [selectedBank, setSelectedBank] = useState(null);
+  const [amount, setAmount] = useState(0);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [refNo, setRefNo] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const navigate = useNavigate();
+
   const { data: agentData } = useFetch(BASE_URL + "/agent");
   const agent = agentData?.agent;
   const banks = agentData?.banks;
 
-  const bank = banks?.find(
-    (b) => String(b?.id) === String(agent?.payment_type_id)
-  );
-  const [amount, setAmount] = useState("");
-  const [error, setError] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+  const bank = banks?.find((b) => String(b?.id) === String(agent?.payment_type_id));
+  authCheck();
 
   const handleCopyText = (e) => {
     e.preventDefault();
-    if (selectedBank.account_number) {
+    if (selectedBank?.account_number) {
       navigator.clipboard.writeText(selectedBank.account_number);
       toast.success("Copied", {
         position: "top-right",
@@ -38,66 +37,73 @@ const Deposit = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   const deposit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (amount < 1000) {
-      setLoading(false);
-      toast.error("အနည်းဆုံး ၁၀၀၀ကျပ်မှ စဖြည့်ပေးပါရန်။", {
-        position: "top-right",
-        autoClose: 1000,
-        theme: "dark",
-        hideProgressBar: false,
-        closeOnClick: true,
-      });
-      return;
-    }
+    setError(null); // Clear previous errors
 
-    const inputData = {
-      agent_payment_type_id: String(selectedBank?.id),
-      amount,
-    };
+    // if (Number(amount) < 1000) {
+    //     setLoading(false);
+    //     toast.error("အနည်းဆုံး ၁၀၀၀ကျပ်မှ စဖြည့်ပေးပါရန်။", {
+    //         position: "top-right",
+    //         autoClose: 1000,
+    //         theme: "dark",
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //     });
+    //     return;
+    // }
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    formData.append("amount", amount);
+    formData.append("refrence_no", refNo);
+    formData.append("agent_payment_type_id", selectedBank?.id);
 
     try {
       const response = await fetch(BASE_URL + "/transaction/deposit", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(inputData),
-      });
+        body: formData,
+    });
+        // console.log(response);
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        if (response.status === 422) {
-          setErrMsg("");
-          setError(errorData.errors || "Unknown error");
-        } else if (response.status === 401) {
-          setError("");
-          setErrMsg(errorData.message || "Unauthorized");
-        } else {
-          throw new Error("Deposit Failed");
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            setError(errorData.errors || errorData.message || "Unknown error");
+            setLoading(false);
+            return;
         }
-        throw new Error("Deposit Failed");
-      }
 
-      const data = await response.json();
-      setLoading(false);
-      setAmount("");
-      toast.success("ငွေသွင်းလွှာ ပို့ပြီးပါပြီ။", {
-        position: "top-right",
-        autoClose: 1000,
-        theme: "dark",
-        hideProgressBar: false,
-        closeOnClick: true,
-      });
+        const data = await response.json();
+        setLoading(false);
+        setAmount("");
+        setRefNo("");
+        setSelectedFile(null);
+        toast.success("ငွေသွင်းလွှာ ပို့ပြီးပါပြီ။", {
+            position: "top-right",
+            autoClose: 1000,
+            theme: "dark",
+            hideProgressBar: false,
+            closeOnClick: true,
+        });
+        navigate('/information?tab=logs');
     } catch (error) {
-      console.error("Error during fetch:", error);
-      setLoading(false);
+        console.log("Error during fetch:", error);
+        setError("An error occurred during the deposit process. Please try again."); // Set a generic error message
+        setLoading(false);
     }
-  };
-
+};
 
   return (
     <div>
@@ -121,9 +127,6 @@ const Deposit = () => {
                 <div className="ms-2">
                   <h6 className="fw-bold text-white">{selectedBank.account_name}</h6>
                   <h6 className="fw-bold text-white">{selectedBank.account_number}</h6>
-                  {/* <h6 className="fw-bold text-white">
-                    {selectedBank.account_number}
-                  </h6> */}
                 </div>
               </div>
               <div>
@@ -134,72 +137,58 @@ const Deposit = () => {
             </div>
           </div>
         )}
-        <Button className='mx-auto mb-4' onClick={()=>setShow(!show)} variant="outline-warning">Choose Bank Account</Button>
-        {/* <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Bank Type : </div>
-          <div className="col-7">
-            <input
-              type="text"
-              className="form-control"
-            />
-          </div>
-        </div>
-        <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Account Name : </div>
-          <div className="col-7">
-            <input
-              value={selectedBank?.accName}
-              type="text"
-              className="form-control"
-            />
-          </div>
-        </div>
-        <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Account Number : </div>
-          <div className="col-7">
-            <input
-              // value={selectedBank?.account}
-              type="text"
-              className="form-control"
-            />
-          </div>
-        </div> */}
+        <Button className="mx-auto mb-4" onClick={() => setShow(!show)} variant="outline-warning">
+          Choose Bank Account
+        </Button>
+        {error?.agent_payment_type_id && <span className="text-danger">{error.agent_payment_type_id}</span>}
         <div className="row mb-2">
           <div className="profileTitle col-5 mt-2">Amount : </div>
           <div className="col-7">
-            <input type="text" className="form-control " 
-            onChange={e=> setAmount(e.target.value)}
-            value={amount}
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => setAmount(e.target.value)}
+              value={amount}
+              placeholder="Enter Amount"
             />
-            {error.amount && <span className="text-danger">{error.amount}</span>}
+            {error?.amount && <span className="text-danger">{error.amount}</span>}
           </div>
         </div>
-        {/* <div className="row mb-2">
+        <div className="row mb-2">
           <div className="profileTitle col-5 mt-2">Receipt : </div>
           <div className="col-7">
-            <input type="file" className="form-control " />
+            <input type="file" className="form-control" onChange={handleFileChange} />
+            {error?.image && <span className="text-danger">{error.image}</span>}
           </div>
-        </div> */}
+        </div>
+        <div className="row mb-2">
+          <div className="profileTitle col-5 mt-2">Reference No : </div>
+          <div className="col-7">
+            <input
+              className="form-control"
+              onChange={(e) => setRefNo(e.target.value)}
+              value={refNo}
+              placeholder="Enter Reference No"
+            />
+            {error?.refrence_no && <span className="text-danger">{error.refrence_no}</span>}
+          </div>
+        </div>
         <div className="text-end mt-3">
-          <button className="btn text-black navLoginBtn" type="submit">Submit</button>
+          <button className="btn text-black navLoginBtn" type="submit" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </button>
         </div>
       </form>
-      <Modal
-        show={show}
-        onHide={() => setShow(false)}
-        className="cursor-pointer infoBankAccModal"
-      >
+      <Modal show={show} onHide={() => setShow(false)} className="cursor-pointer infoBankAccModal">
         <div className="px-1 py-2">
-          <Modal.Header>
-            <Modal.Title className=" text-center mx-auto">
-              <h5 className="fw-bold infoBankAccModalTitle">
-                Choose Bank Account to Deposit
-              </h5>
+          <Modal.Header closeButton>
+            <Modal.Title className="text-center mx-auto">
+              <h5 className="fw-bold infoBankAccModalTitle">Choose Bank Account to Deposit</h5>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row">
-            {banks && banks.map((bank, index) => {
-              return (
+            {banks &&
+              banks.map((bank, index) => (
                 <div
                   key={index}
                   onClick={() => {
@@ -208,23 +197,16 @@ const Deposit = () => {
                   }}
                   className="d-flex gap-2 bg-white mb-2 p-2 rounded-3 text-black"
                 >
-                  <img
-                    src={bank.img}
-                    className="bankModalImg img-fluid rounded-2"
-                  />
+                  <img src={bank.img} className="bankModalImg img-fluid rounded-2" />
                   <div>
-                    <p>Account : {bank.account_number}</p>
-                    <p>Account name : {bank.account_name}</p>
+                    <p>Account: {bank.account_number}</p>
+                    <p>Account name: {bank.account_name}</p>
                   </div>
                 </div>
-              );
-            })}
+              ))}
           </Modal.Body>
           <Modal.Footer>
-            <button
-              onClick={() => setShow(false)}
-              className="navLoginBtn btn text-black fw-bold w-100"
-            >
+            <button onClick={() => setShow(false)} className="navLoginBtn btn text-black fw-bold w-100">
               ပယ်ဖျက်သည်
             </button>
           </Modal.Footer>
