@@ -16,7 +16,7 @@ const WithDraw = () => {
   const [accountName, setAccountName] = useState("");
   const [amount, setAmount] = useState("");
   const [accountNo, setAccountNo] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,10 +39,10 @@ const WithDraw = () => {
     const inputData = {
       "payment_type_id": payment,
       "account_name": accountName,
-      "account_no": accountNo,
+      "account_number": accountNo,
       "amount": amount,
-      "accountNo": accountNo,
-      "password": password
+      // "accountNo": accountNo,
+      // "password": password
     }
     fetch(BASE_URL + "/transaction/withdraw", {
       method: "POST",
@@ -83,6 +83,11 @@ const WithDraw = () => {
       .then((data) => {
         // console.log(data);
         setLoading(false);
+        setError("");
+        setAccountName("");
+        setAccountNo("");
+        setAmount("");
+        setPayment("")
         setSuccess("ငွေထုတ်လွှာ တောင်းခံပြီးပါပြီ။.");
         setTimeout(() => {
           setSuccess("");
@@ -157,7 +162,7 @@ const WithDraw = () => {
                   value={accountNo}
                   onChange={(e) => setAccountNo(e.target.value)}
                   />
-                  {error.account_no && <span className="text-danger">*{error.account_no}</span> }
+                  {error.account_number && <span className="text-danger">*{error.account_number}</span> }
                 </div>
             </div>
             <div className="row mb-2">
@@ -172,7 +177,7 @@ const WithDraw = () => {
                   {error.amount && <span className="text-danger">*{error.amount}</span> }
                 </div>
             </div>
-            <div className="row mb-2">
+            {/* <div className="row mb-2">
                 <div className="profileTitle col-5 mt-2">User Password  : </div>
                 <div className="col-7">
                   <input type="password" className="form-control"
@@ -182,7 +187,7 @@ const WithDraw = () => {
                   />
                   {error.password && <span className="text-danger">*{error.password}</span> }
                 </div>
-            </div>
+            </div> */}
             <div className="text-end mt-3">
                 {loading ? <Spinner /> : 
                 <button className="btn fw-bold text-black navLoginBtn">
