@@ -7,6 +7,7 @@ import "../assets/css/auth.css";
 import BASE_URL from "../hooks/baseURL";
 
 const LoginPage = () => {
+  const [eye, setEye] = useState(false);
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
@@ -16,10 +17,10 @@ const LoginPage = () => {
   const auth = localStorage.getItem("token");
 
   useEffect(() => {
-    if(auth){
+    if (auth) {
       navigate("/");
     }
-  }, [navigate, auth])
+  }, [navigate, auth]);
 
   const login = (e) => {
     e.preventDefault();
@@ -87,21 +88,20 @@ const LoginPage = () => {
               value={phone}
             />
           </InputGroup>
-          {error.phone && (
-            <span className="text-danger">*{error.phone}</span>
-          )}
+          {error.phone && <span className="text-danger">*{error.phone}</span>}
         </div>
-        <div className="mb-3">
+        <div className="mb-3 password">
           <InputGroup>
             <InputGroup.Text className="formIcon" id="basic-addon1">
               <BiLock size={20} />
             </InputGroup.Text>
-            <Form.Control
-              placeholder="စကားဝှက်"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
+              <Form.Control
+                placeholder="စကားဝှက်"
+                type={`${eye ? "text" : "password"}`}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+              <i className={`fas view cursor-pointer fa-${eye ? "eye-slash" : "eye"}`} onClick={() => setEye(!eye)}></i>
           </InputGroup>
           {error.password && (
             <span className="text-danger">*{error.password}</span>

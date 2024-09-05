@@ -68,6 +68,12 @@ const en_data = {
         type: "Type",
         amount: "Amount",
         datetime: "DateTime"
+    },
+    contact: {
+        contact: "Contact Us",
+        welcome: "Welcome to Bossi",
+        service: "Our service is 24/7 for you.",
+        hotline: "Hotline"
     }
 }
 

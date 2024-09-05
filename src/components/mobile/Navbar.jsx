@@ -50,12 +50,12 @@ function Navbar() {
       link: "/promotion",
     },
     { img: contact, name_mm: "ဆက်သွယ်ရန်", name: "Contact", link: "/contact" },
-    {
-      img: about,
-      name_mm: "ကျွန်ုပ်တို့အကြောင်း",
-      name: "About Us",
-      link: "/about",
-    },
+    // {
+    //   img: about,
+    //   name_mm: "ကျွန်ုပ်တို့အကြောင်း",
+    //   name: "About Us",
+    //   link: "/about",
+    // },
   ];
   const [show, setShow] = useState(false);
 

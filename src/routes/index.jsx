@@ -48,10 +48,10 @@ export const router=createBrowserRouter([
                 path:'/information',
                  element:<InformationPage/>
              },
-             {
-                path:'/about',
-                 element:<AboutPage/>
-             }
+            //  {
+            //     path:'/about',
+            //      element:<AboutPage/>
+            //  }
         ]
     }
 ])

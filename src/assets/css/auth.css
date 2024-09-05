@@ -20,6 +20,21 @@
     margin: auto;
  
 }
+.password{
+    position: relative;
+}
+.view{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #000;
+    z-index: 1000;
+}
+.view:hover{
+    color: #DDBB58;
+}
 @media screen and (max-width:800px) {
     .authForm{
         width: 80%;

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../hooks/baseURL";
 
 const RegisterPage = () => {
+  const [eye, setEye] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -73,35 +74,37 @@ const RegisterPage = () => {
           </InputGroup>
           {error.phone && <div className="text-danger">{error.phone}</div>}
         </div>
-        <div className="mb-3">
+        <div className="mb-3 password">
           <InputGroup>
             <InputGroup.Text className="formIcon" id="basic-addon1">
               <BiLock size={20} />
             </InputGroup.Text>
             <Form.Control
               placeholder="စကားဝှက်"
-              type="password"
+              type={`${eye ? "text" : "password"}`}
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
           </InputGroup>
+          <i className={`fas view cursor-pointer fa-${eye ? "eye-slash" : "eye"}`} onClick={() => setEye(!eye)}></i>
           {error.password && (
             <div className="text-danger">{error.password}</div>
           )}
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 password">
           <InputGroup className="mb-3">
             <InputGroup.Text className="formIcon" id="basic-addon1">
               <BiLock size={20} />
             </InputGroup.Text>
             <Form.Control
               placeholder="စကားဝှက် အတည်ပြုပါ"
-              type="password"
+              type={`${eye ? "text" : "password"}`}
               onChange={(e) => setConfirmPassword(e.target.value)}
               value={confirmPassword}
             />
           </InputGroup>
+          <i className={`fas view cursor-pointer fa-${eye ? "eye-slash" : "eye"}`} onClick={() => setEye(!eye)}></i>
           {error.password_confirmation && (
             <div className="text-danger">{error.password_confirmation}</div>
           )}
