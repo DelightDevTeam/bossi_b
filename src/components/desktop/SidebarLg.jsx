@@ -20,7 +20,7 @@ import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
 
 const SidebarLg = () => {
-  const { lan, auth, user } = useContext(AuthContext);
+  const { lan, auth, user, content } = useContext(AuthContext);
   const { data: agent } = useFetch(BASE_URL + "/agent");
   // console.log(agent);
 
@@ -136,8 +136,9 @@ const SidebarLg = () => {
                 </span>
               </div>
             </Link>
-            <Link to={"/information?tab=transfer"}>
-              <img src={depositLg} className="depositLgImg" />
+            <Link className="btn btn-warning rounded-5 w-100" to={"/information?tab=transfer"}>
+            {content?.wallet?.deposit}
+              {/* <img src={depositLg} className="depositLgImg" /> */}
             </Link>
           </div>
         )}

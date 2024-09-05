@@ -4,7 +4,7 @@ import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
 import authCheck from "../../hooks/authCheck";
 
-export default function TransferLogs() {
+export default function TransferLogs({content}) {
   authCheck();
   const [selectedDate, setSelectedDate] = useState("today");
   const [url, setUrl] = useState(
@@ -26,7 +26,7 @@ export default function TransferLogs() {
             }`}
             onClick={() => setSelectedDate("today")}
           >
-            Today
+            {content.log.today}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -34,7 +34,7 @@ export default function TransferLogs() {
             }`}
             onClick={() => setSelectedDate("yesterday")}
           >
-            Yesterday
+            {content.log.yesterday}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -42,7 +42,7 @@ export default function TransferLogs() {
             }`}
             onClick={() => setSelectedDate("this_week")}
           >
-            This Week
+            {content?.log?.this_week}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -50,7 +50,7 @@ export default function TransferLogs() {
             }`}
             onClick={() => setSelectedDate("last_week")}
           >
-            Last Week
+            {content.log.last_week}
           </button>
         </div>
         <div className="table-responsive">
@@ -58,16 +58,16 @@ export default function TransferLogs() {
             <thead>
               <tr>
                 <th>
-                  <small>Closing Balance</small>
+                  <small>{content.log.close_balance}</small>
                 </th>
                 <th>
-                  <small>Type</small>
+                  <small>{content.log.type}</small>
                 </th>
                 <th>
-                  <small>Amount</small>
+                  <small>{content.log.amount}</small>
                 </th>
                 <th>
-                  <small>DateTime</small>
+                  <small>{content.log.datetime}</small>
                 </th>
               </tr>
             </thead>

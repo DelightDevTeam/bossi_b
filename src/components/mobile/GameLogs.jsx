@@ -4,7 +4,7 @@ import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
 import authCheck from "../../hooks/authCheck";
 
-export default function GameLogs() {
+export default function GameLogs({content}) {
   authCheck();
   const [selectedDate, setSelectedDate] = useState("today");
   const [url, setUrl] = useState(BASE_URL + "/wager-logs?type=" + selectedDate);
@@ -24,7 +24,7 @@ export default function GameLogs() {
             }`}
             onClick={() => setSelectedDate("today")}
           >
-            Today
+            {content.log.today}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -32,7 +32,7 @@ export default function GameLogs() {
             }`}
             onClick={() => setSelectedDate("yesterday")}
           >
-            Yesterday
+            {content.log.yesterday}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -40,7 +40,7 @@ export default function GameLogs() {
             }`}
             onClick={() => setSelectedDate("this_week")}
           >
-            This Week
+            {content?.log?.this_week}
           </button>
           <button
             className={`btn btn-sm btn-${
@@ -48,7 +48,7 @@ export default function GameLogs() {
             }`}
             onClick={() => setSelectedDate("last_week")}
           >
-            Last Week
+            {content?.log?.last_week}
           </button>
         </div>
         <div className="table-responsive">
@@ -56,22 +56,22 @@ export default function GameLogs() {
             <thead>
               <tr>
                 <th>
-                  <small>From</small>
+                  <small>{content.log.from}</small>
                 </th>
                 <th>
-                  <small>To</small>
+                  <small>{content.log.to}</small>
                 </th>
                 <th>
-                  <small>ဂိမ်းနာမည်</small>
+                  <small>{content.log.game_name}</small>
                 </th>
                 <th>
-                  <small>အကြိမ်ရေ</small>
+                  <small>{content.log.count}</small>
                 </th>
                 <th>
-                  <small>လောင်းကြေး</small>
+                  <small>{content.log.bet_amount}</small>
                 </th>
                 <th>
-                  <small>လွှဲပြောင်းငွေ</small>
+                  <small>{content.log.win_amount}</small>
                 </th>
               </tr>
             </thead>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useFetch from "../../hooks/useFetch"
 import BASE_URL from "../../hooks/baseURL"
 import SmallSpinner from './SmallSpinner';
@@ -6,9 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import authCheck from '../../hooks/authCheck';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const WithDraw = () => {
   authCheck();
+  const { content } = useContext(AuthContext);
   const {data:user} = useFetch(BASE_URL + "/user");
   const {data: channels} = useFetch(BASE_URL + "/payment-type");
 
@@ -16,7 +18,7 @@ const WithDraw = () => {
   const [accountName, setAccountName] = useState("");
   const [amount, setAmount] = useState("");
   const [accountNo, setAccountNo] = useState("");
-  // const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ const WithDraw = () => {
       "account_number": accountNo,
       "amount": amount,
       // "accountNo": accountNo,
-      // "password": password
+      "password": password
     }
     fetch(BASE_URL + "/transaction/withdraw", {
       method: "POST",
@@ -119,7 +121,7 @@ const WithDraw = () => {
       )}
         <form onSubmit={withdraw}>
             <div className="row mb-2">
-              <div className="profileTitle col-5 mt-2">Current Balance : </div>
+              <div className="profileTitle col-5 mt-2">{content?.wallet?.balance} : </div>
                 <div className="col-7">
                   <input type="text" 
                   className="form-control "
@@ -129,11 +131,11 @@ const WithDraw = () => {
             </div>
             <div className="row mb-2">
                 <div className="profileTitle col-5 mt-2">
-                  Payment Method : 
+                {content?.wallet?.choose_bank} : 
                 </div>
                 <div className="col-7">
                   <select className="form-control form-select" onChange={e => setPayment(e.target.value)} value={payment}>
-                    <option value="">Select</option>
+                    <option value="">{content?.wallet?.select}</option>
                     {channels && channels.map((item, index) => (
                       <option key={index} value={item.id}>{item.name}</option>
                     ))}
@@ -142,11 +144,11 @@ const WithDraw = () => {
                 </div>
             </div>
             <div className="row mb-2">
-                <div className="profileTitle col-5 mt-2">Account Name : </div>
+                <div className="profileTitle col-5 mt-2">{content?.wallet?.account_name} : </div>
                 <div className="col-7">
                   <input type="text" 
                   className="form-control" 
-                  placeholder='အကောင့်နာမည်' 
+                  placeholder={content?.wallet?.account_name} 
                   value={accountName}
                   onChange={(e) => setAccountName(e.target.value)}
                   />
@@ -154,11 +156,11 @@ const WithDraw = () => {
                 </div>
             </div>
             <div className="row mb-2">
-                <div className="profileTitle col-5 mt-2">Account No: </div>
+                <div className="profileTitle col-5 mt-2">{content?.wallet?.account}: </div>
                 <div className="col-7">
                   <input type="text" 
                   className="form-control" 
-                  placeholder='အကောင့်နံပါတ်' 
+                  placeholder={content?.wallet?.account} 
                   value={accountNo}
                   onChange={(e) => setAccountNo(e.target.value)}
                   />
@@ -166,32 +168,32 @@ const WithDraw = () => {
                 </div>
             </div>
             <div className="row mb-2">
-                <div className="profileTitle col-5 mt-2">ပမာဏ : </div>
+                <div className="profileTitle col-5 mt-2">{content?.wallet?.amount} : </div>
                 <div className="col-7">
                   <input type="number" 
                   className="form-control " 
-                  placeholder='ထုတ်ယူမည့် ပမာဏ' 
+                  placeholder={content?.wallet?.amount} 
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   />
                   {error.amount && <span className="text-danger">*{error.amount}</span> }
                 </div>
             </div>
-            {/* <div className="row mb-2">
-                <div className="profileTitle col-5 mt-2">User Password  : </div>
+            <div className="row mb-2">
+                <div className="profileTitle col-5 mt-2">{content?.auth?.password}  : </div>
                 <div className="col-7">
                   <input type="password" className="form-control"
-                  placeholder='လျို့ဝှက်နံပါတ်' 
+                  placeholder={content?.auth?.password} 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   />
                   {error.password && <span className="text-danger">*{error.password}</span> }
                 </div>
-            </div> */}
+            </div>
             <div className="text-end mt-3">
                 {loading ? <Spinner /> : 
                 <button className="btn fw-bold text-black navLoginBtn">
-                  ခွင့်ပြုသည်
+                  {content?.btn?.submit}
                 </button>}
             </div>
         </form>

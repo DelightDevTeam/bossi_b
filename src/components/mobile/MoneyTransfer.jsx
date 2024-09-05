@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import WithDraw from './WithDraw';
 import '../../assets/css/moneyTransfer.css'
 import Deposit from './Deposit';
 import Transfer from './Transfer';
+import { AuthContext } from '../../contexts/AuthContext';
 
-const MoneyTransfer = () => {
+const MoneyTransfer = ({content}) => {
+  // const { content } = useContext(AuthContext)
     const [selectedTab,setSelectedTab]=useState(1);
     const tabs=[
-        {id:1,name:'ငွေသွင်းရန်',value:''},
-        {id:2,name:'ငွေထုတ်ရန်',value:''},
+        {id:1,name:content.wallet.deposit,value:''},
+        {id:2,name:content.wallet.withdraw,value:''},
         // {id:3,name:'လွှဲပြောင်းရန်',value:''},
      ]
   return (

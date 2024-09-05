@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SmallSpinner from "./SmallSpinner"
 import BASE_URL from '../../hooks/baseURL';
 import authCheck from '../../hooks/authCheck';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const ChangePassword = () => {
   authCheck();
+  const { content } = useContext(AuthContext)
   const [current, setCurrent] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -78,7 +80,7 @@ const ChangePassword = () => {
     <div>
       <form className="profileForm mb-5 px-3 mt-4 py-4 rounded-4" onSubmit={changePassword}>
         <div className="d-flex justify-content-between">
-          <h5 className="fw-bold mb-3">Change Password</h5>
+          <h5 className="fw-bold mb-3">{content?.profile?.change_password}</h5>
           <div>
             {success && (
               <div className="alert alert-success alert-dismissible" role="alert">
@@ -93,7 +95,7 @@ const ChangePassword = () => {
           </div>
         </div>
          <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">password အဟောင်း  : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.old_password}  : </div>
             <div className="col-7">
               <input type="password" 
               className="form-control"
@@ -104,7 +106,7 @@ const ChangePassword = () => {
             </div>
         </div>
          <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">password အသစ်  : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.new_password}  : </div>
             <div className="col-7">
             <input type="password" 
             className="form-control"
@@ -115,7 +117,7 @@ const ChangePassword = () => {
             </div>
         </div>
         <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">စကားဝှက် အတည်ပြုပါ : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.confirm_password}  : </div>
             <div className="col-7">
             <input type="password" 
             className="form-control"
@@ -128,7 +130,7 @@ const ChangePassword = () => {
         <div className="text-end mt-3">
         <button className="btn text-black navLoginBtn">
           {loading && <SmallSpinner />}
-            Update Password
+          {content?.profile?.change_password}
         </button>
         </div>
       </form>

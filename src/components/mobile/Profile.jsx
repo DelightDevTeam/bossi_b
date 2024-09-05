@@ -6,6 +6,7 @@ import SmallSpinner from './SmallSpinner';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const Profile = () => {
+  const { content } = useContext(AuthContext)
   // const {data:user} = useFetch(BASE_URL + "/user");
   const {updateProfile, user, auth} = useContext(AuthContext);
   const [username, setUsername] = useState(user?.user_name);
@@ -87,7 +88,7 @@ const Profile = () => {
     <div>
       <form className="profileForm px-3 py-4 rounded-4" onSubmit={profile}>
       <div className="d-flex justify-content-between">
-          <h5 className="fw-bold mb-3">မှတ်တမ်း ပြုပြင်ရန်</h5>
+          <h5 className="fw-bold mb-3">{content?.profile?.update_profile}</h5>
           <div>
             {success && (
               <div className="alert alert-success alert-dismissible" role="alert">
@@ -102,7 +103,7 @@ const Profile = () => {
           </div>
         </div>
          <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">ဂိမ်းအကောင့် : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.username} : </div>
             <div className="col-7">
               <input type="text" 
               className="form-control text-dark"
@@ -112,7 +113,7 @@ const Profile = () => {
             </div>
         </div>
          <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">အမည်အပြည့်စုံ : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.full_name} : </div>
             <div className="col-7">
               <input type="text" 
               className="form-control" 
@@ -123,7 +124,7 @@ const Profile = () => {
             </div>
         </div>
         <div className="row mb-2">
-            <div className="profileTitle col-5 mt-2">Phone Number : </div>
+            <div className="profileTitle col-5 mt-2">{content?.profile?.phone} : </div>
             <div className="col-7">
             <input type="text" 
             className="form-control " 
@@ -136,7 +137,7 @@ const Profile = () => {
         <div className="text-end mt-3">
         <button className="btn text-black navLoginBtn">
           {loading && <SmallSpinner />}
-            Update Profile
+          {content?.profile?.update_profile}
         </button>
         </div>
       </form>

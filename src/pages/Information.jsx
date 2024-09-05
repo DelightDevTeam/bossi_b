@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaHistory, FaUser } from "react-icons/fa";
 import { IoWalletSharp } from "react-icons/io5";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -8,31 +8,32 @@ import Profile from "../components/mobile/Profile";
 import MoneyTransfer from "../components/mobile/MoneyTransfer";
 import ChangePassword from "../components/mobile/ChangePassword";
 import Log from "../components/mobile/Log";
-import { AuthContextProvider } from "../contexts/AuthContext";
+import { AuthContext, AuthContextProvider } from "../contexts/AuthContext";
  
 
 const InformationPage = () => {
+  const { content } = useContext(AuthContext);
   const navigate = useNavigate();
    const [searchParams] = useSearchParams();
   const heading = [
     {
       id: 1,
       icon: <FaUser />,
-      title: "Profile User",
+      title: content.nav.profile_user,
       link: "/information?tab=profile",
       value: "profile",
     },
     {
       id: 2,
       icon: <IoWalletSharp />,
-      title: "Money Transfer",
+      title: content.nav.money_transfer,
       link: "/information?tab=transfer",
       value: "transfer",
     },
     {
       id: 3,
       icon: <FaHistory />,
-      title: "Logs",
+      title: content.nav.logs,
       link: "/information?tab=logs",
       value: "logs",
     },
@@ -73,8 +74,8 @@ const InformationPage = () => {
             <ChangePassword />
           </>
         )}
-        {tab === "transfer" && <MoneyTransfer />}
-        {tab === "logs" && <Log />}
+        {tab === "transfer" && <MoneyTransfer content={content} />}
+        {tab === "logs" && <Log content={content} />}
       </div>
     </div>
     </AuthContextProvider>

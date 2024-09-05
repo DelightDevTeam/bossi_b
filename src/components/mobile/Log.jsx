@@ -7,13 +7,13 @@ import GameLogs from '../mobile/GameLogs';
 import DepositLog from '../mobile/DepositLog';
 import WithdrawLog from '../mobile/WithdrawLog';
 
-const Log = () => {
+const Log = ({content}) => {
   const [selectedTab,setSelectedTab]=useState(1);
   const tabs=[
-      {id:1,name:'ငွေသွင်း',value:''},
-      {id:2,name:'ငွေထုတ်',value:''},
-      {id:3,name:'လွှဲပြောင်းမှတ်တမ်း',value:''},
-      {id:4,name:'ဂိမ်းမှတ်တမ်း',value:''},
+      {id:1,name:content.wallet.deposit,value:''},
+      {id:2,name:content.wallet.withdraw,value:''},
+      {id:3,name:content.log.transfer_log,value:''},
+      {id:4,name:content.log.game_log,value:''},
    ];
 
   return (
@@ -35,11 +35,11 @@ const Log = () => {
       )}
       {/* transaction */}
       {selectedTab === 3 && (
-        <TransferLogs />
+        <TransferLogs content={content} />
       )}
       {/* game logs */}
       {selectedTab === 4 && (
-        <GameLogs />
+        <GameLogs content={content} />
       )}
     </div>
   )

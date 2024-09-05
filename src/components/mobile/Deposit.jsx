@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import authCheck from "../../hooks/authCheck";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Deposit = () => {
+  const { content } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null);
   const [amount, setAmount] = useState(0);
@@ -110,7 +112,7 @@ const Deposit = () => {
       <ToastContainer />
       <form className="profileForm px-3 py-4 rounded-4" onSubmit={deposit}>
         <div className="d-flex justify-content-between">
-          <h5 className="fw-bold mb-3">ငွေသွင်းရန်</h5>
+          <h5 className="fw-bold mb-3">{content?.wallet?.deposit} </h5>
         </div>
         {selectedBank && (
           <div className="border border-light bg-transparent rounded-4 p-2 px-3 my-3 shadow-lg">
@@ -138,11 +140,11 @@ const Deposit = () => {
           </div>
         )}
         <Button className="mx-auto mb-4" onClick={() => setShow(!show)} variant="outline-warning">
-          Choose Bank Account
+          {content?.wallet?.choose_bank}
         </Button>
         {error?.agent_payment_type_id && <span className="text-danger">{error.agent_payment_type_id}</span>}
         <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Amount : </div>
+          <div className="profileTitle col-5 mt-2">{content?.wallet?.amount} : </div>
           <div className="col-7">
             <input
               type="text"
@@ -155,27 +157,27 @@ const Deposit = () => {
           </div>
         </div>
         <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Receipt : </div>
+          <div className="profileTitle col-5 mt-2">{content?.wallet?.receipt} : </div>
           <div className="col-7">
             <input type="file" className="form-control" onChange={handleFileChange} />
             {error?.image && <span className="text-danger">{error.image}</span>}
           </div>
         </div>
         <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">Reference No : </div>
+          <div className="profileTitle col-5 mt-2">{content?.wallet?.trans_no} : </div>
           <div className="col-7">
             <input
               className="form-control"
               onChange={(e) => setRefNo(e.target.value)}
               value={refNo}
-              placeholder="Enter Reference No"
+              placeholder={content?.wallet?.enter_trans_no}
             />
             {error?.refrence_no && <span className="text-danger">{error.refrence_no}</span>}
           </div>
         </div>
         <div className="text-end mt-3">
           <button className="btn text-black navLoginBtn" type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? content?.btn?.submit + "..." : content?.btn?.submit}
           </button>
         </div>
       </form>
@@ -183,7 +185,7 @@ const Deposit = () => {
         <div className="px-1 py-2">
           <Modal.Header closeButton>
             <Modal.Title className="text-center mx-auto">
-              <h5 className="fw-bold infoBankAccModalTitle">Choose Bank Account to Deposit</h5>
+              <h5 className="fw-bold infoBankAccModalTitle">{content?.wallet?.choose_bank}</h5>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row">
@@ -199,15 +201,15 @@ const Deposit = () => {
                 >
                   <img src={bank.img} className="bankModalImg img-fluid rounded-2" />
                   <div>
-                    <p>Account: {bank.account_number}</p>
-                    <p>Account name: {bank.account_name}</p>
+                    <p>{content?.wallet?.account}: {bank.account_number}</p>
+                    <p>{content?.wallet?.account_name}: {bank.account_name}</p>
                   </div>
                 </div>
               ))}
           </Modal.Body>
           <Modal.Footer>
             <button onClick={() => setShow(false)} className="navLoginBtn btn text-black fw-bold w-100">
-              ပယ်ဖျက်သည်
+              {content?.btn?.cancle}
             </button>
           </Modal.Footer>
         </div>
