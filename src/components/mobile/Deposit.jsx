@@ -164,13 +164,13 @@ const Deposit = () => {
           </div>
         </div>
         <div className="row mb-2">
-          <div className="profileTitle col-5 mt-2">{content?.wallet?.trans_no} : </div>
+          <div className="profileTitle col-5 mt-2">{content?.wallet?.trans_id} : </div>
           <div className="col-7">
             <input
               className="form-control"
               onChange={(e) => setRefNo(e.target.value)}
               value={refNo}
-              placeholder={content?.wallet?.enter_trans_no}
+              placeholder={content?.wallet?.enter_last_6_digits}
             />
             {error?.refrence_no && <span className="text-danger">{error.refrence_no}</span>}
           </div>
