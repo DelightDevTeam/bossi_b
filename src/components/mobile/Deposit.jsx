@@ -18,11 +18,16 @@ const Deposit = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
 
-  const { data: agentData } = useFetch(BASE_URL + "/agent");
-  const agent = agentData?.agent;
-  const banks = agentData?.banks;
+  // const { data: agentData } = useFetch(BASE_URL + "/agent");
+  const { data: banks} = useFetch(BASE_URL + "/payment-type");
+  // const agent = agentData?.agent;
+  // const banks = agentData?.banks;
+  console.log(banks);
 
-  const bank = banks?.find((b) => String(b?.id) === String(agent?.payment_type_id));
+  // return;
+  
+  
+  // const bank = banks?.find((b) => String(b?.id) === String(agent?.payment_type_id));
   authCheck();
 
   const handleCopyText = (e) => {
@@ -45,23 +50,13 @@ const Deposit = () => {
       setSelectedFile(file);
     }
   };
+  console.log(selectedBank);
+  
 
   const deposit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null); // Clear previous errors
-
-    // if (Number(amount) < 1000) {
-    //     setLoading(false);
-    //     toast.error("အနည်းဆုံး ၁၀၀၀ကျပ်မှ စဖြည့်ပေးပါရန်။", {
-    //         position: "top-right",
-    //         autoClose: 1000,
-    //         theme: "dark",
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //     });
-    //     return;
-    // }
+    setError(null);
 
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -122,7 +117,7 @@ const Deposit = () => {
                   <img
                     className="rounded-3 shadow"
                     src={selectedBank.image_url}
-                    width={100}
+                    width={50}
                     alt=""
                   />
                 </div>
@@ -199,7 +194,7 @@ const Deposit = () => {
                   }}
                   className="d-flex gap-2 bg-white mb-2 p-2 rounded-3 text-black"
                 >
-                  <img src={bank.img} className="bankModalImg img-fluid rounded-2" />
+                  <img src={bank.image_url} className="bankModalImg img-fluid rounded-2" />
                   <div>
                     <p>{content?.wallet?.account}: {bank.account_number}</p>
                     <p>{content?.wallet?.account_name}: {bank.account_name}</p>

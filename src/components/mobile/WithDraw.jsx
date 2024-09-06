@@ -13,6 +13,8 @@ const WithDraw = () => {
   const { content } = useContext(AuthContext);
   const {data:user} = useFetch(BASE_URL + "/user");
   const {data: channels} = useFetch(BASE_URL + "/payment-type");
+  // console.log(channels);
+  
 
   const [payment, setPayment] = useState("");
   const [accountName, setAccountName] = useState("");
