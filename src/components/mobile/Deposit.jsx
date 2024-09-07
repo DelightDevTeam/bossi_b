@@ -17,17 +17,7 @@ const Deposit = () => {
   const [refNo, setRefNo] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-
-  // const { data: agentData } = useFetch(BASE_URL + "/agent");
   const { data: banks} = useFetch(BASE_URL + "/payment-type");
-  // const agent = agentData?.agent;
-  // const banks = agentData?.banks;
-  console.log(banks);
-
-  // return;
-  
-  
-  // const bank = banks?.find((b) => String(b?.id) === String(agent?.payment_type_id));
   authCheck();
 
   const handleCopyText = (e) => {
@@ -50,9 +40,7 @@ const Deposit = () => {
       setSelectedFile(file);
     }
   };
-  console.log(selectedBank);
   
-
   const deposit = async (e) => {
     e.preventDefault();
     setLoading(true);

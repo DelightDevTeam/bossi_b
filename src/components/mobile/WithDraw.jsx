@@ -13,6 +13,7 @@ const WithDraw = () => {
   const { content } = useContext(AuthContext);
   const {data:user} = useFetch(BASE_URL + "/user");
   const {data: channels} = useFetch(BASE_URL + "/payment-type");
+  const navigate = useNavigate();
   // console.log(channels);
   
 
@@ -41,7 +42,7 @@ const WithDraw = () => {
       return;
     }
     const inputData = {
-      "payment_type_id": payment,
+      "bank_id": payment,
       "account_name": accountName,
       "account_number": accountNo,
       "amount": amount,
