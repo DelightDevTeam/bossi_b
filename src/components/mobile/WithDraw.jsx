@@ -80,7 +80,7 @@ const WithDraw = () => {
             setError("")
             console.error(`${response.status}:`, errorData);
           } else {
-            console.error(`Unexpected error with status ${response.status}`);
+            // console.error(`Unexpected error with status ${response.status}`);
           }
         }
         return response.json();
@@ -102,7 +102,7 @@ const WithDraw = () => {
         setError("")
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
   }
 
@@ -143,7 +143,7 @@ const WithDraw = () => {
                       <option key={index} value={item.id}>{item.name}</option>
                     ))}
                   </select>
-                  {error.payment_type_id && <small className="text-danger">*{"ငွေပေးချေမှုနည်းလမ်း ရွေးချယ်ပါ။"}</small> }
+                  {error.bank_id && <small className="text-danger">*{"ငွေပေးချေမှုနည်းလမ်း ရွေးချယ်ပါ။"}</small> }
                 </div>
             </div>
             <div className="row mb-2">
