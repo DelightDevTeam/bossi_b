@@ -16,6 +16,8 @@ export default function WithdrawLog() {
   const { data: withdraw, loading } = useFetch(
     BASE_URL + "/transaction/withdraw-log"
   );
+  console.log(withdraw);
+  
   const { data: channels } = useFetch(BASE_URL + "/payment-type");
 
   const formatDate = (dateString) => {
