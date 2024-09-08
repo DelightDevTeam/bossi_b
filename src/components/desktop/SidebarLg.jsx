@@ -131,9 +131,9 @@ const SidebarLg = () => {
                 <p className="navBalance">
                   {user?.balance && Number(user.balance).toLocaleString()} MMK
                 </p>
-                <span className="repeatIcon bg-danger ms-1">
+                {/* <span className="repeatIcon bg-danger ms-1">
                   <BsArrowRepeat size={16} />
-                </span>
+                </span> */}
               </div>
             </Link>
             <Link className="btn btn-warning rounded-5 w-100" to={"/information?tab=transfer"}>
