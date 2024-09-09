@@ -57,7 +57,7 @@ const RegisterPage = () => {
   };
   return (
     <div className="authBg py-4 mb-5">
-      <h3 className="fw-bold text-center">စာရင်းသွင်းရန်</h3>
+      <h3 className="fw-bold text-center">{content?.auth?.register}</h3>
       {/* <h6 className="text-warning text-center mt-4 mb-3 fw-bold"> 
       စာရင်းသွင်းပြီးလျှင်ပြောင်းလဲ၍ မရတော့သောကြောင့် သင်၏သတင်းအချက်အလက်များကို အမှန်တိုင်းဖြည့်စွက်ပေးပါ
        </h6> */}
@@ -145,13 +145,13 @@ const RegisterPage = () => {
         <div className="authBtns">
           <button type="submit" className="registerBtn mb-3 pb-3">
             <div className="text-center pt-3 ">
-              <h5 className="fw-semibold">စာရင်းသွင်းရန်</h5>
+              <h5 className="fw-semibold">{content?.auth?.register}</h5>
             </div>
           </button>
           <Link to={"/login"}>
             <div className="loginBtn mb-3">
               <div className="text-center pt-3">
-                <h5 className="fw-semibold">လော့အင်</h5>
+                <h5 className="fw-semibold">{content?.auth?.login}</h5>
               </div>
             </div>
           </Link>
