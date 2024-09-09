@@ -106,7 +106,7 @@ const SidebarLg = () => {
 
   return (
     <div className="sidebarLgContainer">
-      <div className="text-center">
+      <div className="text-center mt-4">
         <Link to={"/"}>
           <img src={logo} className="" width={160} />
         </Link>
