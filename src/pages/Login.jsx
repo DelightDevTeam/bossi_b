@@ -89,6 +89,7 @@ const LoginPage = () => {
             />
           </InputGroup>
           {error.phone && <span className="text-danger">*{error.phone}</span>}
+          {errMsg &&  <span className="text-danger">*{errMsg}</span>}
         </div>
         <div className="mb-3 password">
           <InputGroup>

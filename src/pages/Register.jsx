@@ -1,12 +1,28 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { BiLink, BiLock, BiPhone, BiUser } from "react-icons/bi";
 import { FaIdCard } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../hooks/baseURL";
+import en_data from "../lang/en";
+import mm_data from "../lang/mm";
 
 const RegisterPage = () => {
+  const lan = localStorage.getItem("lan");
+  const [content, setContent] = useState(en_data);
+
+  useEffect(() => {
+    if(lan === "mm"){
+      setContent(mm_data);
+    }else{
+      setContent(en_data);
+    }
+  }, [lan]);
+
+  console.log(content);
+  
+  
   const [eye, setEye] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -52,7 +68,7 @@ const RegisterPage = () => {
               <FaIdCard size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="အမည်ရင်း"
+              placeholder={content?.auth?.enter_name}
               aria-describedby="basic-addon1"
               onChange={(e) => setName(e.target.value)}
               value={name}
@@ -66,7 +82,7 @@ const RegisterPage = () => {
               <BiPhone size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="ဖုန်းနံပါတ်"
+              placeholder={content?.auth?.enter_phone}
               aria-describedby="basic-addon1"
               onChange={(e) => setPhone(e.target.value)}
               value={phone}
@@ -80,7 +96,7 @@ const RegisterPage = () => {
               <BiLock size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="စကားဝှက်"
+              placeholder={content?.auth?.enter_password}
               type={`${eye ? "text" : "password"}`}
               onChange={(e) => setPassword(e.target.value)}
               value={password}
@@ -98,7 +114,7 @@ const RegisterPage = () => {
               <BiLock size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="စကားဝှက် အတည်ပြုပါ"
+              placeholder={content?.auth?.enter_confirm_password}
               type={`${eye ? "text" : "password"}`}
               onChange={(e) => setConfirmPassword(e.target.value)}
               value={confirmPassword}
@@ -115,7 +131,7 @@ const RegisterPage = () => {
               <BiLink size={20} />
             </InputGroup.Text>
             <Form.Control
-              placeholder="ရည်ညွန်းကုဒ်"
+              placeholder={content?.auth?.enter_ref_code}
               aria-describedby="basic-addon1"
               onChange={(e) => setRefCode(e.target.value)}
               value={refCode}

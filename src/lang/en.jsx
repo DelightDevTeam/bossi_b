@@ -2,10 +2,13 @@ const en_data = {
     auth: {
         login: "Login",
         register: "Register",
+        enter_name: "Enter your real name",
         phone: "Phone",
         enter_phone: "Enter your phone",
         password: "Password",
         enter_password: "Enter your password",
+        enter_confirm_password: "Enter confirm password",
+        enter_ref_code: "Referral Code ( example : bossi )"
     },
     profile:{
         update_profile: "Update Profile",
@@ -36,13 +39,13 @@ const en_data = {
     wallet: {
         deposit: "Deposit",
         withdraw: "Withdraw",
-        amount: "Amount No",
+        amount: "Amount",
         enter_amount: "Enter amount",
         choose_bank: "Choose Bank",
         receipt: "Receipt",
         trans_id: "Transaction ID",
         enter_last_6_digits: "Enter last 6 digits",
-        account: "Account",
+        account: "Account No",
         account_name: "Account Name",
         balance: "Balance",
         select: "Select",

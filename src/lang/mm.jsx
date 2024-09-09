@@ -2,10 +2,13 @@ const mm_data = {
     auth: {
         login: "အကောင့်ဝင်သည်",
         register: "အကောင့်ဖွင့်သည်",
+        enter_name: "အမည်ရင်း ထည့်ပါ",
         phone: "ဖုန်း",
-        enter_phone: "ဖုန်းနံပါတ်ထည့်ပါ",
+        enter_phone: "ဖုန်းနံပါတ် အမှန်ထည့်ပါ",
         password: "ဝှက်စာ",
         enter_password: "ဝှက်စာထည့်ပါ",
+        enter_confirm_password: "ဝှက်စာ အတည်ပြုပါ",
+        enter_ref_code: "ရည်ညွှန်းကုဒ် ( example : bossi )"
     },
     profile:{
         update_profile: "မှတ်တမ်း ပြုပြင်ရန်",
