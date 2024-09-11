@@ -31,7 +31,7 @@ const launchGame = (type, provider, game) => async (e) => {
     }
 
     const data = await response.json();
-    window.open(data.Url);
+    window.location.href = data.Url;
     // window.open(data.Url, "_blank");
     console.log("Launch Game success");
   } catch (error) {
