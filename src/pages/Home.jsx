@@ -7,7 +7,7 @@ import { FaGift, FaViber } from "react-icons/fa";
 import tele from "../assets/img/tele.png";
 import viber from "../assets/img/viber.png";
 import fb from "../assets/img/fb.png";
-import ads from '../assets/img/ads.png';
+import adsImg from '../assets/img/ads.png';
 import Marquee from "../components/mobile/Marquee";
 import BASE_URL from "../hooks/baseURL";
 import useFetch from "../hooks/useFetch";
@@ -30,12 +30,12 @@ const HomePage = () => {
     { img: viber, link: "viber.com" },
     { img: fb, link: "facebook.com" },
   ];
-  const [show, setShow] = useState(true);
+   const { data:ads } = useFetch(BASE_URL + "/popup-ads-banner");
  // Function to show alert with image
  const showAlertWithImage = () => {
   MySwal.fire({
-     text: 'ငွေသွင်းငွေထုတ်အတွက် အကြောင်းကြားစာ ဆက်သွယ်နိုင်ပါတယ် အခုပဲ လိုင်းစိမ်းကို အပ်လိုက်ပါ Add Line @bossi',
-     imageUrl: ads, // Replace with your image URL
+     text: 'ငွေသွင်းငွေထုတ်အတွက် အကြောင်းကြားစာ ဆက်သွယ်နိုင်ပါတယ် အခုပဲ ဆက်သွယ်လိုက်ပါ  @bossi',
+     imageUrl: ads?.img_url , // Replace with your image URL
     imageWidth: 400,
     imageHeight: 200,
     imageAlt: 'Ads Image',
