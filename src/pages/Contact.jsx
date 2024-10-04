@@ -15,10 +15,10 @@ const ContactPage = () => {
   const { content } = useContext(AuthContext)
   const {data:agent} = useFetch(BASE_URL + '/agent')
     const socials=[
-        {img:tele,title:'Telegram',link:'/'},
-        {img:viber,title:'Viber',link:'/'},
-        {img:fb,title:'Facebook',link:'/'},
-        {img:line,title:'Line',link:'/'},
+        {img:tele,title:'Telegram',link:'http://t.me/Bossiofficial'},
+        {img:viber,title:'Viber',link:'https://msng.link/o?09947000013=vi'},
+        {img:fb,title:'Facebook',link:'https://www.facebook.com/profile.php?id=61565208721129&mibextid=LQQJ4d'},
+        {img:line,title:'Phone',link:'tel:09947000013'},
      ]
   return (
     <div className='py-5 px-3 px-sm-5 mb-5 '>
@@ -32,16 +32,16 @@ const ContactPage = () => {
             <small className='d-block mt-2 fw-bold'>{content.contact.service}</small>
         </div>
       </div>
-      <div className="text-center">
-      {content.contact.hotline} - {agent?.phone}
-        {/* {socials.map((item,index)=>{
+      <p className='text-center mb-5'>{content.contact.hotline} - {agent?.phone}</p>
+      <div className="row text-center">
+        {socials.map((item,index)=>{
             return <div className='col-6 mb-4 col-sm-3 text-center' key={index}>
-               <Link to={item.link}>
+               <Link to={item.link} target='_blank'>
                <img src={item.img} className='socialContactImg' />
                 <small className='d-block'>{item.title}</small>
                </Link>
             </div>
-        })} */}
+        })}
       </div>
     </div>
   )

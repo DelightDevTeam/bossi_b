@@ -30,17 +30,17 @@ const WithDraw = () => {
   const withdraw = (e) => {
     e.preventDefault();
     setLoading(true);
-    // if(amount < 1000){
-    //   setLoading(false)
-    //   toast.error("အနည်းဆုံး ၁၀၀၀ကျပ်မှစ၍ ထုတ်ယူနိုင်ပါသည်။", {
-    //       position: "top-right",
-    //       autoClose: 1000,
-    //       theme: 'dark',
-    //       hideProgressBar: false,
-    //       closeOnClick: true
-    //   })
-    //   return;
-    // }
+    if(amount < 10000){
+      setLoading(false)
+      toast.error("အနည်းဆုံး ၁၀,၀၀၀ ကျပ်မှစ၍ ထုတ်ယူနိုင်ပါသည်။", {
+          position: "top-right",
+          autoClose: 1000,
+          theme: 'dark',
+          hideProgressBar: false,
+          closeOnClick: true
+      })
+      return;
+    }
     const inputData = {
       "bank_id": payment,
       "account_name": accountName,
