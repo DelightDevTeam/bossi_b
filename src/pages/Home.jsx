@@ -43,8 +43,8 @@ const HomePage = () => {
   });
 };
 useEffect(()=>{
-  showAlertWithImage()
-},[])
+ if(ads?.img_url)  showAlertWithImage()
+},[ads])
   return (
     <div >
        <div className="px-lg-3">
