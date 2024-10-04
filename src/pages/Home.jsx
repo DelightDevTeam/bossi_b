@@ -26,9 +26,9 @@ const HomePage = () => {
   const MySwal = withReactContent(Swal);
 
   const links = [
-    { img: tele, link: "telegram.org" },
-    { img: viber, link: "viber.com" },
-    { img: fb, link: "facebook.com" },
+    { img: tele, link: "http://t.me/Bossiofficial" },
+    { img: viber, link: "https://msng.link/o?09947000013=vi" },
+    { img: fb, link: "https://www.facebook.com/profile.php?id=61565208721129&mibextid=LQQJ4d" },
   ];
    const { data:ads } = useFetch(BASE_URL + "/popup-ads-banner");
  // Function to show alert with image
@@ -84,10 +84,10 @@ useEffect(()=>{
             </button>
           </Link>
 
-          <div className="mt-4 w-full text-center d-flex align-items-center justify-content-center gap-2  py-2 cursor-pointer sidebarSocial text-center rounded-3">
+          <Link to={'https://msng.link/o?09947000013=vi'} target="_blank" className="mt-4 w-full text-center d-flex align-items-center justify-content-center gap-2  py-2 cursor-pointer sidebarSocial text-center rounded-3">
             <FaViber size={28} />
-            <p className=" fw-semibold">: 0912345689</p>
-          </div>
+            <p className=" fw-semibold">: 09947000013</p>
+          </Link>
           <Link
             to={"/promotion"}
             className="mt-4  w-full text-center d-flex align-items-center justify-content-center gap-2   py-2 cursor-pointer homePromotionBtn text-center rounded-3"
@@ -100,7 +100,7 @@ useEffect(()=>{
           <div className="mt-4  d-flex align-items-center  justify-content-center gap-4">
             {links.map((item, index) => {
               return (
-                <Link to={item.link} key={index}>
+                <Link to={item.link} target="_blank" key={index}>
                   <img src={item.img} className="homeContactImg" />
                 </Link>
               );
