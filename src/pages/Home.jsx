@@ -27,7 +27,7 @@ const HomePage = () => {
 
   const links = [
     { img: tele, link: "http://t.me/Bossiofficial" },
-    { img: viber, link: "https://msng.link/o?09947000013=vi" },
+    { img: viber, link: "https://msng.link/o?959947000013=vi" },
     { img: fb, link: "https://www.facebook.com/profile.php?id=61565208721129&mibextid=LQQJ4d" },
   ];
    const { data:ads } = useFetch(BASE_URL + "/popup-ads-banner");

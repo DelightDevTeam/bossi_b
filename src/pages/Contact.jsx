@@ -16,7 +16,7 @@ const ContactPage = () => {
   const {data:agent} = useFetch(BASE_URL + '/agent')
     const socials=[
         {img:tele,title:'Telegram',link:'http://t.me/Bossiofficial'},
-        {img:viber,title:'Viber',link:'https://msng.link/o?09947000013=vi'},
+        {img:viber,title:'Viber',link:'https://msng.link/o?959947000013=vi'},
         {img:fb,title:'Facebook',link:'https://www.facebook.com/profile.php?id=61565208721129&mibextid=LQQJ4d'},
         {img:line,title:'Phone',link:'tel:09947000013'},
      ]
