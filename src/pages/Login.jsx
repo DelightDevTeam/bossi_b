@@ -65,7 +65,8 @@ const LoginPage = () => {
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("ads", "on");
           navigate("/");
-          console.log("success");
+          window.location.reload();
+          // console.log("success");
         } else {
           throw new Error("Token not found in response");
         }

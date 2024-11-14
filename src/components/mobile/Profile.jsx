@@ -119,6 +119,7 @@ const Profile = () => {
               className="form-control" 
               value={name} 
               onChange={e => setName(e.target.value)}
+              disabled
               />
               {error.name && <span className="text-danger">*{error.name}</span>}
             </div>
@@ -130,15 +131,16 @@ const Profile = () => {
             className="form-control " 
             value={phone} 
             onChange={e => setPhone(e.target.value)} 
+            disabled
             />
             {error.phone && <span className="text-danger">*{error.phone}</span>}
             </div>
         </div>
         <div className="text-end mt-3">
-        <button className="btn text-black navLoginBtn">
+        {/* <button className="btn text-black navLoginBtn">
           {loading && <SmallSpinner />}
           {content?.profile?.update_profile}
-        </button>
+        </button> */}
         </div>
       </form>
     </div>
