@@ -34,7 +34,7 @@ const HomePage = () => {
  // Function to show alert with image
  const showAlertWithImage = () => {
   MySwal.fire({
-     text: 'ငွေသွင်းငွေထုတ်အတွက် အကြောင်းကြားစာ ဆက်သွယ်နိုင်ပါတယ် အခုပဲ ဆက်သွယ်လိုက်ပါ  @bossi',
+     text: 'ကစားထားသော ဂိမ်းများ report ကြည့်မရခြင်း၊ အကောင့်တခုထပ်ပို၍ဖွင့်ကစားထားခြင်း စသည်များကို တွေ့ရှိပါက ထိုကဲ့သို ကစားထားသော Player အနိုင်ကြေးအပြင် သွင်းငွေကိုပါ ထုတ်ပေးမည် မဟုတ်ကြောင်း လေးစားစွာအသိပေးအပ်ပါသည်။',
      imageUrl: ads?.img_url , // Replace with your image URL
     imageWidth: 400,
     imageHeight: 200,

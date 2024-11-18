@@ -26,12 +26,13 @@ import Marquee from 'react-fast-marquee'
 const FooterProviders = () => {
      const providers=[fp1, fp2, fp3, fp4, fp5, fp6,  fp8, fp9, fp10, fp11, fp12, fp13, fp14, fp15, fp16, fp18, fp19, fp20, fp21, fp22, fp23]
 
-
+     let current = new Date();
+     let currentYear = current.getFullYear();
 
     return (
     <div style={{background:'#0D0D0D'}} className='py-5' >
        <p className='d-block text-center'>Best viewed by Google Chrome 72.0 or higher. Best viewed at a resolution of 1280x1024 or higher</p>
-       <p className="d-block text-center my-4">Top Slots MM Copyright © 2019 . All rights reserved.</p>
+       <p className="d-block text-center my-4">Bossi Copyright © {currentYear} . All rights reserved.</p>
       <div className='mt-3 d-flex flex-wrap align-items-center justify-content-center gap-3 px-0 px-sm-4  mb-5 mb-sm-0'>
          {providers.map((img,index)=>{
             return <img src={img} className='providerImg ' key={index} />
